@@ -1,0 +1,20 @@
+{
+  "name": "generator-postgraphqlexpress",
+  "version": "0.0.0",
+  "description": "postgres graphql express generator",
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "main": "./generators/app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris Landa <stylesuxx@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "yeoman-generator": "^0.20.3"
+  }
+}
