@@ -10,7 +10,7 @@ const server = global.server = express();
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));
 
-server.use('<%= graphqlroute %>', graphqlHTTP({ schema: ItemSchema, graphiql: true }));
+server.use('<%= graphqlroute %>', graphqlHTTP({ schema: ItemSchema, graphiql: <%= graphiql %> }));
 
 server.listen(server.get('port'), () => {
   if (process.send) {

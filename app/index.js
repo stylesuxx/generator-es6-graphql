@@ -32,7 +32,6 @@ module.exports = generator.Base.extend({
       }.bind(this));
     },
 
-    /*
     graphiql: function() {
       var done = this.async();
       this.prompt({
@@ -46,7 +45,6 @@ module.exports = generator.Base.extend({
         done();
       }.bind(this));
     },
-    */
   },
 
   writing: {
