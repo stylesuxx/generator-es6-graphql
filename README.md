@@ -1,4 +1,5 @@
-# generator-es6-graphql
+# generator-es6-graphql [![Build Status](https://secure.travis-ci.org/stylesuxx/generator-es6-graphql.png?branch=master)](https://travis-ci.org/stylesuxx/generator-es6-graphql) [![Dependency Status](https://david-dm.org/stylesuxx/generator-es6-graphql.svg)](https://david-dm.org/stylesuxx/generator-es6-graphql)
+
 With this generator you can quickly create an es6 graphql enabled server.
 
 ## Goal
