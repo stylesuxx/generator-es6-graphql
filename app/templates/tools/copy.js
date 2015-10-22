@@ -6,7 +6,8 @@ export default async () => {
   console.log('Copying...');
 
   await Promise.all([
-    copy('package.json', 'build/package.json')
+    copy('package.json', 'build/package.json'),
+    copy('public', 'build/public')
   ]);
 
   replace({
