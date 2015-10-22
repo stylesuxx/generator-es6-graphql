@@ -129,11 +129,6 @@ module.exports = generator.Base.extend({
   end: {
     finished: function() {
       this.log(chalk.bold.green('\nGenerator setup finished.'));
-
-      if(this.database === 'mongoose') {
-        this.log('Do not forget to create a mongo database named', chalk.bold.white(this.appname));
-      }
-
       this.log('If you see no errors above, run the server:');
       this.log(chalk.bold.white('npm start'));
     }
