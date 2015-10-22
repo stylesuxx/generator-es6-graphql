@@ -44,6 +44,30 @@ module.exports = generator.Base.extend({
 
         done();
       }.bind(this));
+    },
+
+    database: function() {
+      var done = this.async();
+      this.prompt({
+        type: 'list',
+        name: 'database',
+        message: 'Choose database',
+        choices: [
+          {
+            name: 'None',
+            value: 'none'
+          },
+          {
+            name: 'Mongoose',
+            value: 'mongoose'
+          }
+        ],
+        default: 0
+      }, function(answers) {
+        this.database = answers.database;
+
+        done();
+      }.bind(this));
     }
   },
 
@@ -85,16 +109,31 @@ module.exports = generator.Base.extend({
 
     schema: function() {
       this.copy('src/schema/itemSchema.js', 'src/schema/itemSchema.js');
+    },
+
+    database: function() {
+      if(this.database === 'mongoose') {
+        this.copy('src/models/.placeholder', 'src/models/.placeholder');
+      }
     }
   },
 
   install: function() {
     this.npmInstall();
+
+    if(this.database === 'mongoose') {
+      this.npmInstall(['mongoose'], { 'save': true });
+    }
   },
 
   end: {
     finished: function() {
       this.log(chalk.bold.green('\nGenerator setup finished.'));
+
+      if(this.database === 'mongoose') {
+        this.log('Do not forget to create a mongo database named', chalk.bold.white(this.appname));
+      }
+
       this.log('If you see no errors above, run the server:');
       this.log(chalk.bold.white('npm start'));
     }
