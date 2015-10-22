@@ -23,7 +23,7 @@ module.exports = generator.Base.extend({
       this.prompt({
         type: 'input',
         name: 'graphqlroute',
-        message: 'Route to the graphql endpoint',
+        message: 'Route to the GraphQL endpoint',
         default: '/'
       }, function(answers) {
         this.graphqlroute = answers.graphqlroute;
@@ -37,7 +37,7 @@ module.exports = generator.Base.extend({
       this.prompt({
         type: 'confirm',
         name: 'graphiql',
-        message: 'Enable graphiql',
+        message: 'Enable GraphiQL',
         default: true
       }, function(answers) {
         this.graphiql = answers.graphiql;
