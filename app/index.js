@@ -18,10 +18,15 @@ module.exports = generator.Base.extend({
   },
 
   writing: {
+    yorc: function() {
+      this.config.save();
+    },
+
     projectfiles: function() {
       this.template('_package.json', 'package.json');
       this.template('eslintrc', '.eslintrc');
-      this.template('README.md');
+      this.template('travis.yml', '.travis.yml');
+      this.template('_README.md', 'README.md');
     },
 
     gitfiles: function() {
@@ -48,9 +53,11 @@ module.exports = generator.Base.extend({
     this.npmInstall();
   },
 
-  end: function() {
-    this.log(chalk.bold.green('\nGenerator setup finished.'));
-    this.log('If you see no errors above, run the server:');
-    this.log(chalk.bold.white('npm start'));
+  end: {
+    finished: function() {
+      this.log(chalk.bold.green('\nGenerator setup finished.'));
+      this.log('If you see no errors above, run the server:');
+      this.log(chalk.bold.white('npm start'));
+    }
   }
 });
