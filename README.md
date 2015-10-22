@@ -5,7 +5,7 @@
 With this [yeoman](http://yeoman.io/) generator you can quickly create an [ES6 (ES2105)](http://es6-features.org/) [graphql](https://facebook.github.io/graphql/) enabled server.
 
 ## Goal
-The goal of this yeoman generator is to enable you to quickly set up an ES6(ES2105) enabled graphql server without dependencies you do not need.
+The goal of this yeoman generator is to enable you to quickly set up an ES6 (ES2105) enabled graphql server without dependencies you do not need.
 
 This means that the choice of for example *database* and *testing framework* is up to you.
 
