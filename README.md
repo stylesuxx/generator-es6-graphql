@@ -1,6 +1,6 @@
 # generator-es6-graphql [![Build Status](https://secure.travis-ci.org/stylesuxx/generator-es6-graphql.png?branch=master)](https://travis-ci.org/stylesuxx/generator-es6-graphql) [![Dependency Status](https://david-dm.org/stylesuxx/generator-es6-graphql.svg)](https://david-dm.org/stylesuxx/generator-es6-graphql)
 
-With this generator you can quickly create an es6 graphql enabled server.
+With this [yeoman](http://yeoman.io/) generator you can quickly create an [es6](http://es6-features.org/) [graphql](https://facebook.github.io/graphql/) enabled server.
 
 ## Goal
 The goal of this *yeoman generator* is to enable you to quickly set up an ES6 enabled graphql server without dependencies you do not need.
