@@ -8,6 +8,15 @@ The goal of this *yeoman generator* is to enable you to quickly set up an ES6 en
 This means that the choice of for example *database* and *testing framework* is up to you.
 
 ## Installation
+Install yo and the generator globally by running:
+
+    sudo npm install -g yo generator-es6-graphql
+
+Create a directory for your new project and run the generator:
+
+    mkdir yourProject
+    cd yourProject
+    yo es6-graphql
 
 ## Included dependencies
 After running the generator you will have a setup with the following dependencies:
