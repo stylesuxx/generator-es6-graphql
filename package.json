@@ -17,6 +17,10 @@
     "express-graphql",
     "webpack"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stylesuxx/generator-es6-graphql"
+  },
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "license": "ISC",
   "dependencies": {
