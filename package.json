@@ -1,7 +1,7 @@
 {
-  "name": "generator-postgraphqlexpress",
+  "name": "generator-es6-graphql",
   "version": "0.0.0",
-  "description": "postgres graphql express generator",
+  "description": "ES6 enabled graphQL server.",
   "files": [
     "app"
   ],
@@ -9,7 +9,13 @@
     "test": "mocha"
   },
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "es6",
+    "graphQL",
+    "graphiQL",
+    "express",
+    "express-graphql",
+    "webpack"
   ],
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "license": "ISC",
