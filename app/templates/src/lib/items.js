@@ -15,7 +15,7 @@ class Items {
   }
 
   getById(id) {
-    return items[0];
+    return items[id - 1];
   }
 }
 
