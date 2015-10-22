@@ -35,6 +35,7 @@ module.exports = generator.Base.extend({
 
     app: function() {
       this.copy('src/server.js', 'src/server.js');
+      this.copy('public/.placeholder', 'public/.placeholder');
     },
 
     tools: function() {
