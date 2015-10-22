@@ -1,3 +1,4 @@
+import { ItemSchema } from './schema/itemSchema';
 import graphqlHTTP from 'express-graphql';
 import express from 'express';
 import 'babel/polyfill';
@@ -8,6 +9,8 @@ const server = global.server = express();
 
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));
+
+server.use('<%= graphqlroute %>', graphqlHTTP({ schema: ItemSchema, graphiql: true }));
 
 server.listen(server.get('port'), () => {
   if (process.send) {
