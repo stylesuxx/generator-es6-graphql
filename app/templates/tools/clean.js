@@ -5,5 +5,5 @@ export default async () => {
   console.log('Cleaning...');
 
   await del(['.tmp', 'build/*', '!build/.git'], {dot: true});
-  await mkdirp('build');
+  await mkdirp('build/public');
 };

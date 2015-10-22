@@ -3,18 +3,48 @@ var generator = require('yeoman-generator');
 var chalk = require('chalk');
 
 module.exports = generator.Base.extend({
-  prompting: function() {
-    var done = this.async();
-    this.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Your project name',
-      default: this.appname
-    }, function(answers) {
-      this.appname = answers.name;
+  prompting: {
+    appname: function() {
+      var done = this.async();
+      this.prompt({
+        type: 'input',
+        name: 'name',
+        message: 'Your project name',
+        default: this.appname
+      }, function(answers) {
+        this.appname = answers.name;
 
-      done();
-    }.bind(this));
+        done();
+      }.bind(this));
+    },
+
+    graphqlroute: function() {
+      var done = this.async();
+      this.prompt({
+        type: 'input',
+        name: 'graphqlroute',
+        message: 'Route to the GraphQL endpoint',
+        default: '/'
+      }, function(answers) {
+        this.graphqlroute = answers.graphqlroute;
+
+        done();
+      }.bind(this));
+    },
+
+    graphiql: function() {
+      var done = this.async();
+      this.prompt({
+        type: 'confirm',
+        name: 'graphiql',
+        message: 'Enable GraphiQL',
+        default: true
+      }, function(answers) {
+        this.graphiql = answers.graphiql;
+
+        done();
+      }.bind(this));
+    }
   },
 
   writing: {
@@ -34,7 +64,8 @@ module.exports = generator.Base.extend({
     },
 
     app: function() {
-      this.copy('src/server.js', 'src/server.js');
+      this.template('src/server.js', 'src/server.js');
+      this.copy('public/.placeholder', 'public/.placeholder');
     },
 
     tools: function() {
@@ -46,6 +77,14 @@ module.exports = generator.Base.extend({
       this.copy('tools/copy.js', 'tools/copy.js');
       this.copy('tools/serve.js', 'tools/serve.js');
       this.copy('tools/start.js', 'tools/start.js');
+    },
+
+    lib: function() {
+      this.copy('src/lib/items.js', 'src/lib/items.js');
+    },
+
+    schema: function() {
+      this.copy('src/schema/itemSchema.js', 'src/schema/itemSchema.js');
     }
   },
 
