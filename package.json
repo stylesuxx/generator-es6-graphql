@@ -1,7 +1,9 @@
 {
   "name": "generator-es6-graphql",
+  "repository": "stylesuxx/generator-es6-graphql",
   "version": "0.0.0",
-  "description": "ES6 enabled graphQL server.",
+  "author": "Chris Landa <stylesuxx@gmail.com>",
+  "description": "ES6 (ES2015) enabled graphQL server.",
   "files": [
     "app"
   ],
@@ -11,21 +13,17 @@
   "keywords": [
     "yeoman-generator",
     "es6",
+    "es2015",
     "graphQL",
     "graphiQL",
     "express",
     "express-graphql",
     "webpack"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stylesuxx/generator-es6-graphql"
-  },
-  "author": "Chris Landa <stylesuxx@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "chalk": "^1.1.1",
-    "yeoman-generator": "^0.20.3"
+    "yeoman-generator": "^0.21.1"
   },
   "devDependencies": {
     "mocha": "^2.3.3",
