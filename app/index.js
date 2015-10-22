@@ -44,7 +44,7 @@ module.exports = generator.Base.extend({
 
         done();
       }.bind(this));
-    },
+    }
   },
 
   writing: {
