@@ -26,6 +26,7 @@ After running the generator you will have a setup with the following dependencie
 * express-graphql
 * graphql
 * source-map-support
+* webpack
 
 ## Development
 This generator is a work in progress, feel free to submit issues for new features or PR's if you add something you want to share.
