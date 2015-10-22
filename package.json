@@ -11,6 +11,7 @@
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^1.1.1",
     "yeoman-generator": "^0.20.3"
   }
 }

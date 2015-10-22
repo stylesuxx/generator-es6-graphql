@@ -1,13 +1,8 @@
 'use strict';
 var generator = require('yeoman-generator');
+var chalk = require('chalk');
 
 module.exports = generator.Base.extend({
-  /*
-  initializing: function() {
-    this.log('initializing just ran');
-  },
-  */
-
   prompting: function() {
     var done = this.async();
     this.prompt({
@@ -22,21 +17,8 @@ module.exports = generator.Base.extend({
     }.bind(this));
   },
 
-  /*
-  configuring: function() {
-    this.log('configuring just ran');
-  },
-
-  default: function() {
-    this.log('default just ran');
-  },
-  */
-
   writing: {
     projectfiles: function() {
-      /*
-      this.template('_travis.yml', '.travis.yml');
-      */
       this.template('_package.json', 'package.json');
       this.template('eslintrc', '.eslintrc');
       this.template('README.md');
@@ -62,19 +44,13 @@ module.exports = generator.Base.extend({
     }
   },
 
-  /*
-  conflicts: function() {
-    this.log('conflicts just ran');
-  },
-  */
-
   install: function() {
     this.npmInstall();
   },
 
-  /*
   end: function() {
-    this.log('end just ran');
+    this.log(chalk.bold.green('\nGenerator setup finished.'));
+    this.log('If you see no errors above, run the server:');
+    this.log(chalk.bold.white('npm start'));
   }
-  */
 });
