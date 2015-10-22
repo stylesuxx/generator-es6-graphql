@@ -18,6 +18,10 @@ Create a directory for your new project and run the generator:
     cd yourProject
     yo es6-graphql
 
+To start your newly generated GraphQL server on port **1234** run:
+
+    npm start
+
 ## Included dependencies
 After running the generator you will have a setup with the following dependencies:
 
