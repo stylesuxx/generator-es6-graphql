@@ -6,7 +6,7 @@ With this [yeoman](http://yeoman.io/) generator you can quickly create an [ES6 (
 ## Goal
 The goal of this yeoman generator is to enable you to quickly set up an ES6 (ES2105) enabled graphql server without dependencies you do not need.
 
-This means that the choice of for example *database* and *testing framework* is up to you.
+This means that the choice of for example *database* and *testing framework* is up to you, although some choices are available during setup.
 
 ## Installation
 Install yo and the generator globally by running:
@@ -32,6 +32,11 @@ After running the generator you will have a setup with the following dependencie
 * graphql
 * source-map-support
 * webpack
+
+## Optional dependencies
+Depending on your choices during setup the following dependencies will be added:
+
+* mongoose
 
 ## Development
 This generator is a work in progress, feel free to submit issues for new features or PR's if you add something you want to share.
