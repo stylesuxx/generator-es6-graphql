@@ -1,0 +1,24 @@
+{
+  "name": "generator-postgraphqlexpress",
+  "version": "0.0.0",
+  "description": "postgres graphql express generator",
+  "files": [
+    "app"
+  ],
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Chris Landa <stylesuxx@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "yeoman-generator": "^0.20.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "mockery": "^1.4.0"
+  }
+}

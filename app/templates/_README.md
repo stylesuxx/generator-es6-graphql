@@ -1,0 +1,4 @@
+# <%= appname %>
+
+
+npm run lint
