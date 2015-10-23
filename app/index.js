@@ -53,14 +53,8 @@ module.exports = generator.Base.extend({
         name: 'database',
         message: 'Choose database',
         choices: [
-          {
-            name: 'None',
-            value: 'none'
-          },
-          {
-            name: 'Mongoose',
-            value: 'mongoose'
-          }
+          {name: 'None', value: 'none'},
+          {name: 'Mongoose', value: 'mongoose'}
         ],
         default: 0
       }, function(answers) {
@@ -68,6 +62,107 @@ module.exports = generator.Base.extend({
 
         done();
       }.bind(this));
+    },
+
+    passport: function() {
+      var done = this.async();
+      this.prompt({
+        type: 'confirm',
+        name: 'authentication',
+        message: 'Enable passport for authentication',
+        default: false
+      }, function(answers) {
+        this.authentication = answers.authentication;
+
+        done();
+      }.bind(this));
+    },
+
+    secret: function() {
+      var done = this.async();
+      if(this.authentication) {
+        this.prompt({
+          type: 'input',
+          name: 'secret',
+          message: 'Session secret',
+          default: 'super-secretive-secret'
+        }, function(answers) {
+          this.secret = answers.secret;
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
+    },
+
+    strategies: function() {
+      var done = this.async();
+      if(this.authentication) {
+        this.authFull = [];
+
+        var choices = [
+          //{name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
+          {name: 'Github', value: 'passport-github', slug: 'github'},
+          //{name: 'Google', value: 'passport-google', slug: 'google'},
+          //{name: 'Twitter', value: 'passport-twitter'}
+        ];
+
+        this.prompt({
+          type: 'checkbox',
+          name: 'auth',
+          message: 'Choose authentication strategies',
+          choices: choices,
+          default: []
+        }, function(answers) {
+          this.auth = answers.auth;
+
+          choices.map(item => {
+            if(this.auth.indexOf(item.value) > -1) {
+              this.authFull.push({
+                npm: item.value,
+                name: item.name,
+                slug: item.slug
+              });
+            }
+          });
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
+    },
+
+    store: function() {
+      var done = this.async();
+      if(this.authentication) {
+        this.prompt({
+          type: 'list',
+          name: 'store',
+          message: 'Choose a session store',
+          choices: [
+            {name: 'Memory', value: 'memory'},
+            //{name: 'Mongoose', value: 'mongoose'}
+          ],
+          default: 0
+        }, function(answers) {
+          this.store = answers.store;
+
+          /*
+          if(this.store === 'mongoose') {
+            this.database = 'mongoose';
+          }
+          */
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
     }
   },
 
@@ -115,20 +210,62 @@ module.exports = generator.Base.extend({
       if(this.database === 'mongoose') {
         this.copy('src/models/.placeholder', 'src/models/.placeholder');
       }
+    },
+
+    authentication: function() {
+      if(this.authentication) {
+        this.template('src/passport.js', 'src/passport.js');
+
+        if(this.auth.length > 0) {
+          this.template('src/passportConfig.js', 'src/passportConfig.js');
+        }
+      }
     }
   },
 
   install: function() {
-    this.npmInstall();
+    this.npmInstall([
+      'babel',
+      'express',
+      'express-graphql',
+      'graphql',
+      'source-map-support',
+      'webpack'
+    ], {'save': true});
+
+    this.npmInstall([
+      'babel-core',
+      'babel-eslint',
+      'babel-loader',
+      'del',
+      'eslint',
+      'lodash',
+      'mkdirp',
+      'ncp',
+      'path',
+      'replace',
+    ], {'saveDev': true});
 
     if(this.database === 'mongoose') {
-      this.npmInstall(['mongoose'], { 'save': true });
+      this.npmInstall(['mongoose'], {'save': true});
+    }
+
+    if(this.session === 'mongoose') {
+      this.npmInstall(['connect-mongoose'], {'save': true});
+    }
+
+    if(this.authentication) {
+      this.npmInstall(['passport', 'express-session'], {'save': true});
+      this.npmInstall(this.auth, {'save': true});
     }
   },
 
   end: {
     finished: function() {
       this.log(chalk.bold.green('\nGenerator setup finished.'));
+      if(this.auth.length > 0) {
+        this.log(chalk.bold.white('Do not forget to add your API credentials to src/passportConfig.js'));
+      }
       this.log('If you see no errors above, run the server:');
       this.log(chalk.bold.white('npm start'));
     }
