@@ -3,6 +3,10 @@ var generator = require('yeoman-generator');
 var chalk = require('chalk');
 
 module.exports = generator.Base.extend({
+  initializing: function() {
+    this.auth = [];
+  },
+
   prompting: {
     appname: function() {
       var done = this.async();
@@ -105,7 +109,7 @@ module.exports = generator.Base.extend({
         var choices = [
           //{name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
           {name: 'Github', value: 'passport-github', slug: 'github'},
-          //{name: 'Google', value: 'passport-google', slug: 'google'},
+          {name: 'Google', value: 'passport-google-oauth', slug: 'google'},
           //{name: 'Twitter', value: 'passport-twitter'}
         ];
 
@@ -136,6 +140,7 @@ module.exports = generator.Base.extend({
       }
     },
 
+    /*
     store: function() {
       var done = this.async();
       if(this.authentication) {
@@ -151,11 +156,9 @@ module.exports = generator.Base.extend({
         }, function(answers) {
           this.store = answers.store;
 
-          /*
           if(this.store === 'mongoose') {
             this.database = 'mongoose';
           }
-          */
 
           done();
         }.bind(this));
@@ -164,6 +167,7 @@ module.exports = generator.Base.extend({
         done();
       }
     }
+    */
   },
 
   writing: {
