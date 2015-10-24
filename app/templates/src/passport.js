@@ -1,9 +1,10 @@
 import passport from 'passport';
-<% if (authFull.length > 0) { %>import config from './passportConfig'<% } %>
-<% authFull.forEach(function(auth){ %>import passport<%- auth.name %> from '<%- auth.npm %>';
-<% }); %>
-<% authFull.forEach(function(auth){ %>const <%- auth.name %>Strategy = passport<%- auth.name %>.Strategy;
-<% }); %>
+<% if (authFull.length > 0) { %>import config from './passportConfig'<% } %><% authFull.forEach(function(auth){ %>
+import passport<%- auth.name %> from '<%- auth.npm %>';<% }); %><%if (auth.length > 0) { %>
+<% } %><% if (auth.indexOf('passport-github') > -1) { %>
+const GithubStrategy = passportGithub.Strategy;<% } %><% if (auth.indexOf('passport-google-oauth') > -1) { %>
+const GoogleStrategy = passportGoogle.OAuth2Strategy;<% } %><%if (auth.length > 0) { %>
+<% } %>
 <% authFull.forEach(function(auth){ %>passport.use(new <%- auth.name %>Strategy(
   {
     clientID: config.<%- auth.slug %>.id,
@@ -14,8 +15,8 @@ import passport from 'passport';
     return done(null, profile);
   }
 ));
-<% }); %>
-passport.serializeUser(function(user, done) {
+
+<% }); %>passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
