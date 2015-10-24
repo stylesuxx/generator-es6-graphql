@@ -122,7 +122,7 @@ module.exports = generator.Base.extend({
         }, function(answers) {
           this.auth = answers.auth;
 
-          choices.map(item => {
+          choices.map(function(item) {
             if(this.auth.indexOf(item.value) > -1) {
               this.authFull.push({
                 npm: item.value,
@@ -130,7 +130,7 @@ module.exports = generator.Base.extend({
                 slug: item.slug
               });
             }
-          });
+          }.bind(this));
 
           done();
         }.bind(this));
