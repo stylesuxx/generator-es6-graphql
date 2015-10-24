@@ -31,6 +31,9 @@ module.exports = generator.Base.extend({
         default: '/'
       }, function(answers) {
         this.graphqlroute = answers.graphqlroute;
+        if(this.graphqlroute[0] != '/') {
+          this.graphqlroute = '/' + this.graphqlroute;
+        }
 
         done();
       }.bind(this));
