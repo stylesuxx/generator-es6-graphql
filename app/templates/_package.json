@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Add your description here.",
   "author": "Your Name <handle@domain.com>",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "lint": "eslint src tools",
     "build": "babel-node --eval \"require('./tools/build')().catch(err => console.error(err.stack))\"",
