@@ -32,8 +32,13 @@ server.get('/auth/google', passport.authenticate('google', {scope: 'https://www.
 server.get('/auth/google/callback', passport.authenticate('google', {
   successRedirect: '/',
   failureRedirect: '/login'
-}));<% }; %>
-<% } %>
+}));<% }; %><% if (auth.indexOf('passport-facebook') > -1) { %>
+
+server.get('/auth/facebook', passport.authenticate('facebook'));
+server.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));<% }; %><% } %>
 server.use('<%= graphqlroute %>', graphqlHTTP({schema: ItemSchema, graphiql: <%= graphiql %>}));
 
 server.listen(server.get('port'), () => {
