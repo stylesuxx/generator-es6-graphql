@@ -124,7 +124,7 @@ module.exports = generator.Base.extend({
         this.authFull = [];
 
         var choices = [
-          //{name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
+          {name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
           {name: 'Github', value: 'passport-github', slug: 'github'},
           {name: 'Google', value: 'passport-google-oauth', slug: 'google'},
           //{name: 'Twitter', value: 'passport-twitter'}
@@ -133,7 +133,7 @@ module.exports = generator.Base.extend({
         this.prompt({
           type: 'checkbox',
           name: 'auth',
-          message: 'Choose authentication strategies',
+          message: 'Choose OAuth strategies',
           choices: choices,
           default: []
         }, function(answers) {
