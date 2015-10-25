@@ -52,3 +52,6 @@ This generator is *work in progress*, feel free to submit issues if you have a p
 Tests are in place and may be run by invoking:
 
     npm run test
+
+### Versioning
+The version of the npm package reflects the current master branch. If you want to check out bleeding edge functionality check out the dev branch.
