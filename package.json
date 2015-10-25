@@ -3,7 +3,7 @@
   "repository": "stylesuxx/generator-es6-graphql",
   "version": "0.2.0",
   "author": "Chris Landa <stylesuxx@gmail.com>",
-  "description": "ES6 (ES2015) enabled graphQL server.",
+  "description": "ES6 (ES2015) enabled graphQL server with optional authentication and database.",
   "files": [
     "app"
   ],
@@ -18,7 +18,8 @@
     "graphiQL",
     "express",
     "express-graphql",
-    "webpack"
+    "webpack",
+    "passport"
   ],
   "license": "ISC",
   "dependencies": {
