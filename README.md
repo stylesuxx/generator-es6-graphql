@@ -35,6 +35,8 @@ If you chose to enable *GraphiQL* you can now browse to your GraphQL endpoint an
 }
 ```
 
+If you chose to enable authentification and selected at least one OAuth strategy, do not forget to add your API credentials for the chosen services to *src/passportConfig.js*.
+
 ## Included dependencies
 After running the generator you will have a setup with the following dependencies:
 
