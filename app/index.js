@@ -67,7 +67,21 @@ module.exports = generator.Base.extend({
       }, function(answers) {
         this.database = answers.database;
 
-        done();
+        if(this.database != 'none') {
+          this.prompt({
+            type: 'input',
+            name: 'name',
+            message: 'Database name',
+            default: this.appname
+          }, function(answers) {
+            this.databaseName = answers.name;
+
+            done();
+          }.bind(this));
+        }
+        else {
+          done();
+        }
       }.bind(this));
     },
 
