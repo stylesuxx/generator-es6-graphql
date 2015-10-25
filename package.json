@@ -1,7 +1,7 @@
 {
   "name": "generator-es6-graphql",
   "repository": "stylesuxx/generator-es6-graphql",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "description": "ES6 (ES2015) enabled graphQL server with optional authentication and database.",
   "files": [
