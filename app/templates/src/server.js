@@ -10,7 +10,7 @@ import session from 'express-session';<% } %>
 const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
 const server = global.server = express();<% if (database === 'mongoose') { %>
 
-mongoose.connect('mongodb://localhost/<%= appname %>');<% } %>
+mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
 
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));<% if (authentication) { %>

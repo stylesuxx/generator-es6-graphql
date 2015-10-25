@@ -31,6 +31,9 @@ module.exports = generator.Base.extend({
         default: '/'
       }, function(answers) {
         this.graphqlroute = answers.graphqlroute;
+        if(this.graphqlroute[0] != '/') {
+          this.graphqlroute = '/' + this.graphqlroute;
+        }
 
         done();
       }.bind(this));
@@ -64,7 +67,21 @@ module.exports = generator.Base.extend({
       }, function(answers) {
         this.database = answers.database;
 
-        done();
+        if(this.database != 'none') {
+          this.prompt({
+            type: 'input',
+            name: 'name',
+            message: 'Database name',
+            default: this.appname
+          }, function(answers) {
+            this.databaseName = answers.name;
+
+            done();
+          }.bind(this));
+        }
+        else {
+          done();
+        }
       }.bind(this));
     },
 
@@ -122,7 +139,7 @@ module.exports = generator.Base.extend({
         }, function(answers) {
           this.auth = answers.auth;
 
-          choices.map(item => {
+          choices.map(function(item) {
             if(this.auth.indexOf(item.value) > -1) {
               this.authFull.push({
                 npm: item.value,
@@ -130,7 +147,7 @@ module.exports = generator.Base.extend({
                 slug: item.slug
               });
             }
-          });
+          }.bind(this));
 
           done();
         }.bind(this));
