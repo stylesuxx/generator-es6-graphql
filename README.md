@@ -26,20 +26,28 @@ To start your newly generated GraphQL server on port **1234** run:
 ## Included dependencies
 After running the generator you will have a setup with the following dependencies:
 
-* babel
-* express
-* express-graphql
-* graphql
-* source-map-support
-* webpack
+* [babel](https://babeljs.io/)
+* [express](http://expressjs.com/)
+* [express-graphql](https://github.com/graphql/express-graphql)
+* [graphql](https://github.com/graphql/graphql-js)
+* [source-map-support](https://github.com/evanw/node-source-map-support)
+* [webpack](https://webpack.github.io/)
 
 ## Optional dependencies
-Depending on your choices during setup the following dependencies will be added:
+Depending on your choices during setup the following dependencies may be added:
 
-* mongoose
+### Database
+* [mongoose](http://mongoosejs.com/)
+
+### Authentication
+* [passport](http://passportjs.org/)
+* [express-session](https://github.com/expressjs/session)
+* [passport-github](https://github.com/jaredhanson/passport-github)
+* [passport-google-oauth](https://github.com/jaredhanson/passport-google-oauth)
+* [passport-facebook](https://github.com/jaredhanson/passport-facebook)
 
 ## Development
-This generator is a work in progress, feel free to submit issues for new features or PR's if you add something you want to share.
+This generator is *work in progress*, feel free to submit issues if you have a problem or PR's if you want to contribute.
 
 Tests are in place and may be run by invoking:
 
