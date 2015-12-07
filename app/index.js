@@ -112,7 +112,7 @@ module.exports = generator.Base.extend({
         ];
 
         if(this.database) {
-          choices.push({ name: 'Local', value: 'passport-local', slug: 'local' })
+          choices.push({ name: 'Local', value: 'passport-local', slug: 'local' });
         }
 
         this.prompt({
