@@ -40,7 +40,7 @@ If you chose to enable authentification and selected at least one OAuth strategy
 ## Included dependencies
 After running the generator you will have a setup with the following dependencies:
 
-* [babel](https://babeljs.io/)
+* [babel6](https://babeljs.io/)
 * [express](http://expressjs.com/)
 * [express-graphql](https://github.com/graphql/express-graphql)
 * [graphql](https://github.com/graphql/graphql-js)

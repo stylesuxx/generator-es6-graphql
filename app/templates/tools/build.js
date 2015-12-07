@@ -1,7 +1,7 @@
 export default async () => {
   console.log('Building...');
 
-  await require('./clean')();
-  await require('./bundle')();
-  await require('./copy')();
+  await require('./clean').default();
+  await require('./bundle').default();
+  await require('./copy').default();
 };

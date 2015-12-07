@@ -1,7 +1,7 @@
 import { ItemSchema } from './schema/itemSchema';
 import graphqlHTTP from 'express-graphql';
 import express from 'express';
-import 'babel/polyfill';
+import 'babel-polyfill';
 import path from 'path';<% if (database === 'mongoose') { %>
 import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
