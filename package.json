@@ -27,6 +27,8 @@
     "yeoman-generator": "^0.21.1"
   },
   "devDependencies": {
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.3",
     "mocha": "^2.3.3",
     "mockery": "^1.4.0"
   }
