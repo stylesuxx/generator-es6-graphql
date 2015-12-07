@@ -193,14 +193,15 @@ module.exports = generator.Base.extend({
     },
 
     projectfiles: function() {
+      this.copy('.babelrc', '.babelrc');
+      this.copy('.eslintrc', '.eslintrc');
+      this.copy('.travis.yml', '.travis.yml');
       this.template('_package.json', 'package.json');
-      this.template('eslintrc', '.eslintrc');
-      this.template('travis.yml', '.travis.yml');
       this.template('_README.md', 'README.md');
     },
 
     gitfiles: function() {
-      this.copy('gitignore', '.gitignore');
+      this.copy('.gitignore', '.gitignore');
     },
 
     app: function() {
@@ -256,8 +257,12 @@ module.exports = generator.Base.extend({
 
     this.npmInstall([
       'babel-core',
+      'babel-polyfill',
+      'babel-cli',
       'babel-eslint',
       'babel-loader',
+      'babel-preset-es2015',
+      'babel-preset-stage-1',
       'del',
       'eslint',
       'lodash',

@@ -6,11 +6,11 @@
   "main": "src/server.js",
   "scripts": {
     "lint": "eslint src tools",
-    "build": "babel-node --eval \"require('./tools/build')().catch(err => console.error(err.stack))\"",
-    "clean": "babel-node --eval \"require('./tools/clean')().catch(err => console.error(err.stack))\"",
-    "copy": "babel-node --eval \"require('./tools/copy')().catch(err => console.error(err.stack))\"",
-    "bundle": "babel-node --eval \"require('./tools/bundle')().catch(err => console.error(err.stack))\"",
-    "start": "babel-node --eval \"require('./tools/start')().catch(err => console.error(err.stack))\"",
+    "build": "babel-node --eval \"require('./tools/build').default().catch(err => console.error(err.stack))\"",
+    "clean": "babel-node --eval \"require('./tools/clean').default().catch(err => console.error(err.stack))\"",
+    "copy": "babel-node --eval \"require('./tools/copy').default().catch(err => console.error(err.stack))\"",
+    "bundle": "babel-node --eval \"require('./tools/bundle').default().catch(err => console.error(err.stack))\"",
+    "start": "babel-node --eval \"require('./tools/start').default().catch(err => console.error(err.stack))\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "ISC"
