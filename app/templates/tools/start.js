@@ -1,4 +1,4 @@
 export default async () => {
-  await require('./build')();
-  await require('./serve')('develop');
+  await require('./build').default();
+  await require('./serve').default('develop');
 }
