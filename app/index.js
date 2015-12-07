@@ -99,36 +99,21 @@ module.exports = generator.Base.extend({
       }.bind(this));
     },
 
-    secret: function() {
-      var done = this.async();
-      if(this.authentication) {
-        this.prompt({
-          type: 'input',
-          name: 'secret',
-          message: 'Session secret',
-          default: 'super-secretive-secret'
-        }, function(answers) {
-          this.secret = answers.secret;
-
-          done();
-        }.bind(this));
-      }
-      else {
-        done();
-      }
-    },
-
     strategies: function() {
       var done = this.async();
       if(this.authentication) {
         this.authFull = [];
 
         var choices = [
-          {name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
-          {name: 'Github', value: 'passport-github', slug: 'github'},
-          {name: 'Google', value: 'passport-google-oauth', slug: 'google'},
+          { name: 'Facebook', value: 'passport-facebook', slug: 'facebook' },
+          { name: 'Github', value: 'passport-github', slug: 'github' },
+          { name: 'Google', value: 'passport-google-oauth', slug: 'google' },
           //{name: 'Twitter', value: 'passport-twitter'}
         ];
+
+        if(this.database) {
+          choices.push({ name: 'Local', value: 'passport-local', slug: 'local' })
+        }
 
         this.prompt({
           type: 'checkbox',
@@ -148,6 +133,25 @@ module.exports = generator.Base.extend({
               });
             }
           }.bind(this));
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
+    },
+
+    secret: function() {
+      var done = this.async();
+      if(this.authentication) {
+        this.prompt({
+          type: 'input',
+          name: 'secret',
+          message: 'Session secret',
+          default: 'super-secretive-secret'
+        }, function(answers) {
+          this.secret = answers.secret;
 
           done();
         }.bind(this));
