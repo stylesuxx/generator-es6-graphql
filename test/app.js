@@ -25,13 +25,14 @@ describe('generator:app', function () {
 
     it('creates files', function () {
       var expected = [
-        '.yo-rc.json',
-        '.gitignore',
+        'package.json',
+        '.babelrc',
         '.eslintrc',
         '.travis.yml',
-        'package.json',
         'README.md',
+        '.gitignore',
         'src/server.js',
+        'public/.placeholder',
         'tools/lib/copy.js',
         'tools/build.js',
         'tools/bundle.js',
@@ -39,7 +40,11 @@ describe('generator:app', function () {
         'tools/config.js',
         'tools/copy.js',
         'tools/serve.js',
-        'tools/start.js'
+        'tools/start.js',
+        'src/lib/items.js',
+        'src/schema/items.js',
+        'src/schema/index.js',
+        'src/passport.js'
       ];
 
       assert.file(expected);
@@ -47,13 +52,6 @@ describe('generator:app', function () {
 
     it('fills package.json with correct information', function () {
       assert.fileContent('package.json',  /"name": "temp"/);
-    });
-
-    it('setup travis.CI config', function () {
-      assert.fileContent(
-        '.travis.yml',
-        /node_js/
-      );
     });
   });
 });
