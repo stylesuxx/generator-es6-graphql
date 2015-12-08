@@ -4,10 +4,10 @@ import passport<%- auth.name %> from '<%- auth.npm %>';<% }); %><%if (auth.lengt
 <% } %><% if (auth.indexOf('passport-github') > -1) { %>
 const GithubStrategy = passportGithub.Strategy;<% } %><% if (auth.indexOf('passport-google-oauth') > -1) { %>
 const GoogleStrategy = passportGoogle.OAuth2Strategy;<% } %><% if (auth.indexOf('passport-facebook') > -1) { %>
-const FacebookStrategy = passportFacebook.Strategy;<% } %><% if (auth.indexOf('passport-local') > -1) { %>
-const LocalStrategy = passportLocal.Strategy;<% } %><%if (auth.length > 0) { %>
+const FacebookStrategy = passportFacebook.Strategy;<% } %><% if (authLocal) { %>
+const LocalStrategy = passportLocal.Strategy;<% } %><%if (auth.length > 0 || authLocal) { %>
 <% } %>
-<% authFull.forEach(function(auth){ if(auth.slug !== 'local') {%>passport.use(new <%- auth.name %>Strategy(
+<% authFull.forEach(function(auth){ %>passport.use(new <%- auth.name %>Strategy(
   {
     clientID: config.<%- auth.slug %>.id,
     clientSecret: config.<%- auth.slug %>.secret,
@@ -18,19 +18,27 @@ const LocalStrategy = passportLocal.Strategy;<% } %><%if (auth.length > 0) { %>
   }
 ));
 
-<% } else {%>passport.use(new LocalStrategy(
+<% }); if(authLocal) { %>passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user || !user.validPassword(password)) {
-        return done(null, false, { message: 'Username and password do not match.' });
-      }
-      return done(null, user);
+    var user = {};
+    var findUser = User.findOne({ username: username }).exec();
+    findUser.then((data) => {
+      user = data;
+      return user.validPassword(password);
+    }).then(()=> {
+      var data = {
+        _id: user._id,
+        username: user.username
+      };
+
+      return done(null, data);
+    }, (err)=> {
+      return done(null, false, { message: 'Username and password do not match.' });
     });
   }
 ));
 
-<%} }); %>passport.serializeUser(function(user, done) {
+<% } %>passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
