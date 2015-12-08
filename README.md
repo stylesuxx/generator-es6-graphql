@@ -27,7 +27,7 @@ To start your newly generated GraphQL server on port **1234** run:
     npm start
 
 ## First steps
-If you chose to enable *GraphiQL* you can now browse to your GraphQL endpoint and play around with the *Documentation Explorer* or invoke your own queries:
+If you chose to enable *GraphiQL* you can now browse to your [GraphQL endpoint](http://localhost:1234/graphql) and play around with the *Documentation Explorer* or invoke your own queries:
 
 ```
 {
