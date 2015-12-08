@@ -1,13 +1,13 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { getItemField } from './items';
-import { selfField, userListField } from './users';
+import { getItemField } from './items';<% if (authLocal) { %>
+import { selfField, userListField } from './users';<% } %>
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-    getItem: getItemField,
+    getItem: getItemField<% if (authLocal) { %>,
     self: selfField,
-    users: userListField
+    users: userListField<% } %>
   })
 });
 
