@@ -247,6 +247,12 @@ module.exports = generator.Base.extend({
       this.copy('src/schema/itemSchema.js', 'src/schema/itemSchema.js');
     },
 
+    models: function() {
+      if(this.authLocal) {
+        this.copy('src/models/User.js', 'src/models/User.js');
+      }
+    },
+
     database: function() {
       if(this.database === 'mongoose') {
         this.copy('src/models/.placeholder', 'src/models/.placeholder');
