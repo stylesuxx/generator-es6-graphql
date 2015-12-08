@@ -52,16 +52,14 @@ The *User* model is very basic and only has the following fields:
 
 The Model also provides functionality to check if passwords match and to store passwords encrypted via *bcrypt*.
 
-##### /singup
-**POST**
+##### /singup (POST)
 * username
 * password
 
 * *200* if user could be signed up
 * *400* if username is taken or parameters are missing
 
-##### /login
-**POST**
+##### /login (POST)
 * username
 * password
 
@@ -69,8 +67,7 @@ The Model also provides functionality to check if passwords match and to store p
 * *400* if parameters are missing
 * *401* if credentials do not match
 
-##### /logout
-**GET**
+##### /logout (GET)
 Logs out a user and destroys his session.
 
 #### Usage
