@@ -79,6 +79,12 @@ server.post('/signup', function(req, res) {
 server.post('/login', passport.authenticate('local'), function(req, res) {
   res.sendStatus(200);
 });
+
+server.get('/logout', function(req, res) {
+  req.logout();
+  req.session.destroy();
+  res.sendStatus(200);
+});
 <% } %>
 server.listen(server.get('port'), () => {
   if (process.send) {
