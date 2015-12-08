@@ -39,12 +39,41 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));<% }; %><% } %>
+
 server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
   schema: ItemSchema,
   rootValue: { session: request.session },
   graphiql: <%= graphiql %>
 })));
+<% if(authLocal) { %>
+server.post('/signup', function(req, res) {
+  req.assert('username', 'Username is required').notEmpty();
+  req.assert('password', 'Password is required').notEmpty();
 
+  var errors = req.validationErrors();
+  if(errors) {
+    res.status(400).json(errors);
+    return;
+  }
+
+  var user = new User({
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  user.save().then((user) => {
+    res.status(200).send();
+    return;
+  }, (err) => {
+    res.status(400).json([{msg: 'Username is already taken'}]);
+    return;
+  });
+});
+
+server.post('/login', passport.authenticate('local'), function(req, res) {
+  res.sendStatus(200);
+});
+<% } %>
 server.listen(server.get('port'), () => {
   if (process.send) {
     process.send('online');
