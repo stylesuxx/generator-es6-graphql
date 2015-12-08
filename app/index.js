@@ -91,12 +91,31 @@ module.exports = generator.Base.extend({
         type: 'confirm',
         name: 'authentication',
         message: 'Enable passport for authentication',
-        default: false
+        default: true
       }, function(answers) {
         this.authentication = answers.authentication;
 
         done();
       }.bind(this));
+    },
+
+    local: function() {
+      var done = this.async();
+      if(this.authentication && this.database) {
+        this.prompt({
+          type: 'confirm',
+          name: 'authLocal',
+          message: 'Enable local authentication strategy',
+          default: true
+        }, function(answers) {
+          this.authLocal = answers.authLocal;
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
     },
 
     strategies: function() {
@@ -110,10 +129,6 @@ module.exports = generator.Base.extend({
           { name: 'Google', value: 'passport-google-oauth', slug: 'google' },
           //{name: 'Twitter', value: 'passport-twitter'}
         ];
-
-        if(this.database) {
-          choices.push({ name: 'Local', value: 'passport-local', slug: 'local' });
-        }
 
         this.prompt({
           type: 'checkbox',
@@ -287,6 +302,10 @@ module.exports = generator.Base.extend({
     if(this.authentication) {
       this.npmInstall(['passport', 'express-session'], {'save': true});
       this.npmInstall(this.auth, {'save': true});
+    }
+
+    if(this.authLocal) {
+      this.npmInstall(['body-parser', 'bcrypt', 'express-validator'], {'save': true});
     }
   },
 
