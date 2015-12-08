@@ -1,7 +1,9 @@
 import passport from 'passport';
 <% if (authFull.length > 0) { %>import config from './passportConfig'<% } %><% authFull.forEach(function(auth){ %>
 import passport<%- auth.name %> from '<%- auth.npm %>';<% }); %><%if (auth.length > 0) { %>
-<% } %><% if (auth.indexOf('passport-github') > -1) { %>
+<% } %><% if (authLocal) { %>import passportLocal from 'passport-local';
+import User from './models/User'<% } %>
+<% if (auth.indexOf('passport-github') > -1) { %>
 const GithubStrategy = passportGithub.Strategy;<% } %><% if (auth.indexOf('passport-google-oauth') > -1) { %>
 const GoogleStrategy = passportGoogle.OAuth2Strategy;<% } %><% if (auth.indexOf('passport-facebook') > -1) { %>
 const FacebookStrategy = passportFacebook.Strategy;<% } %><% if (authLocal) { %>
