@@ -39,7 +39,11 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));<% }; %><% } %>
-server.use('<%= graphqlroute %>', graphqlHTTP({schema: ItemSchema, graphiql: <%= graphiql %>}));
+server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
+  schema: ItemSchema,
+  rootValue: { session: request.session },
+  graphiql: <%= graphiql %>
+})));
 
 server.listen(server.get('port'), () => {
   if (process.send) {
