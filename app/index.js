@@ -312,7 +312,7 @@ module.exports = generator.Base.extend({
     }
 
     if(this.authLocal) {
-      this.npmInstall(['body-parser', 'express-validator', 'bcrypt'], {'save': true});
+      this.npmInstall(['passport-local', 'body-parser', 'express-validator', 'bcrypt'], {'save': true});
     }
   },
 
