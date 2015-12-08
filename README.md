@@ -4,9 +4,12 @@
 With this [yeoman](http://yeoman.io/) generator you can quickly create an [ES6 (ES2105)](http://es6-features.org/) [graphql](https://facebook.github.io/graphql/) enabled server.
 
 ## Goal
-The goal of this yeoman generator is to enable you to quickly set up an ES6 (ES2105) enabled graphql server without dependencies you do not need.
+The goal of this yeoman generator is to enable you to quickly set up an ES6 (ES2105) enabled GraphQL server without dependencies you do not need.
 
-This means that the choice of for example *database* and *testing framework* is up to you, although some choices are available during setup.
+This means that the choice of for example *database* and *testing framework* is up to you, although some choices are available during setup to make your life easier:
+* *mongoose* as database
+* *passport* for authentication
+* *local authentication* with basic user model skeleton
 
 ## Installation
 Install yo and the generator globally by running:
@@ -28,37 +31,64 @@ If you chose to enable *GraphiQL* you can now browse to your GraphQL endpoint an
 
 ```
 {
-  find(id: 1){
+  getItem(id: 1){
     id,
     name
   }
 }
 ```
 
-If you chose to enable authentification and selected at least one OAuth strategy, do not forget to add your API credentials for the chosen services to *src/passportConfig.js*.
-
-## Included dependencies
-After running the generator you will have a setup with the following dependencies:
-
-* [babel6](https://babeljs.io/)
-* [express](http://expressjs.com/)
-* [express-graphql](https://github.com/graphql/express-graphql)
-* [graphql](https://github.com/graphql/graphql-js)
-* [source-map-support](https://github.com/evanw/node-source-map-support)
-* [webpack](https://webpack.github.io/)
-
-## Optional dependencies
-Depending on your choices during setup the following dependencies may be added:
-
-### Database
-* [mongoose](http://mongoosejs.com/)
-
 ### Authentication
-* [passport](http://passportjs.org/)
-* [express-session](https://github.com/expressjs/session)
-* [passport-github](https://github.com/jaredhanson/passport-github)
-* [passport-google-oauth](https://github.com/jaredhanson/passport-google-oauth)
-* [passport-facebook](https://github.com/jaredhanson/passport-facebook)
+If you chose to enable authentication and selected at least one OAuth strategy, do not forget to add your API credentials for the chosen services to *src/passportConfig.js*.
+
+#### Local Authentication
+If you chose to enable a database and local authentication, you will get a basic *User* model and some routes for free.
+
+##### User model
+The *User* model is very basic and only has the following fields:
+* \_id
+* username
+* password
+
+The Model also provides functionality to check if passwords match and to store passwords encrypted via *bcrypt*.
+
+##### /singup
+**POST**
+* username
+* password
+
+* *200* if user could be signed up
+* *400* if username is taken or parameters are missing
+
+##### /login
+**POST**
+* username
+* password
+
+* *200* if user could be logged
+* *400* if parameters are missing
+* *401* if credentials do not match
+
+##### /logout
+**GET**
+Logs out a user and destroys his session.
+
+#### Usage
+Open *GraphiQL* and run:
+```
+{
+  users {_id, username},
+  self {_id, username}
+}
+```
+
+You will see that *users* is an empty array and *self is null*, this is because there are no users signed up yet and you are not logged in.
+
+Signup via the route mentioned above and then run the commands again. The users array should now contain information about the user you just signed up.
+
+Now login via the route mentioned above and run the commands again. The users array still has one user, but now self should contain information about the currently logged in user.
+
+If you open the logout route mentioned above and run the commands again, self is null again.
 
 ## Development
 This generator is *work in progress*, feel free to submit issues if you have a problem or PR's if you want to contribute.
