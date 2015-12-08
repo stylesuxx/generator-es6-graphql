@@ -5,7 +5,10 @@ import 'babel-polyfill';
 import path from 'path';<% if (database === 'mongoose') { %>
 import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
-import session from 'express-session';<% } %>
+import session from 'express-session';<% } if (authLocal) { %>
+import bodyParser from 'body-parser';
+import validator from 'express-validator';
+import User from './models/User';<% } %>
 
 const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
 const server = global.server = express();<% if (database === 'mongoose') { %>
