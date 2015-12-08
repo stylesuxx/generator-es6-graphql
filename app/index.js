@@ -5,6 +5,7 @@ var chalk = require('chalk');
 module.exports = generator.Base.extend({
   initializing: function() {
     this.auth = [];
+    this.authLocal = false;
   },
 
   prompting: {
