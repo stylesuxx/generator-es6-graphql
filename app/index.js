@@ -258,7 +258,7 @@ module.exports = generator.Base.extend({
         this.template('src/_passport.js', 'src/passport.js');
 
         if(this.auth.length > 0) {
-          this.template('src/passportConfig.js', 'src/passportConfig.js');
+          this.template('src/_passportConfig.js', 'src/passportConfig.js');
         }
       }
     }
