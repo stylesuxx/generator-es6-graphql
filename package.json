@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^1.1.1",
+    "crypto": "0.0.3",
     "yeoman-generator": "^0.21.1"
   },
   "devDependencies": {

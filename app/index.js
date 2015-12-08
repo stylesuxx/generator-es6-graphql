@@ -1,6 +1,7 @@
 'use strict';
 var generator = require('yeoman-generator');
 var chalk = require('chalk');
+var crypto = require('crypto');
 
 module.exports = generator.Base.extend({
   initializing: function() {
@@ -165,7 +166,7 @@ module.exports = generator.Base.extend({
           type: 'input',
           name: 'secret',
           message: 'Session secret',
-          default: 'super-secretive-secret'
+          default: crypto.randomBytes(16).toString('hex')
         }, function(answers) {
           this.secret = answers.secret;
 
