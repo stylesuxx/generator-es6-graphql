@@ -24,4 +24,13 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+UserSchema.methods.validPassword = function(password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, this.password, function(err, match) {
+      if (err) reject(err);
+      (match) ? resolve() : reject('Passwords do not match');
+    });
+  });
+};
+
 module.exports = mongoose.model('User', UserSchema);
