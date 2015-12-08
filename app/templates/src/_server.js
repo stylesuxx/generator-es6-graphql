@@ -15,7 +15,10 @@ const server = global.server = express();<% if (database === 'mongoose') { %>
 
 mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
 
-server.set('port', port);
+server.set('port', port);<% if (authLocal) { %>
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(validator());
+server.use(bodyParser.json());<% } %>
 server.use(express.static(path.join(__dirname, 'public')));<% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
