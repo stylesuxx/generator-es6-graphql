@@ -1,4 +1,4 @@
-import { ItemSchema } from './schema/itemSchema';
+import { Schema } from './schema';
 import graphqlHTTP from 'express-graphql';
 import express from 'express';
 import 'babel-polyfill';
@@ -47,7 +47,7 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }));<% }; %><% } %>
 
 server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
-  schema: ItemSchema,
+  schema: Schema,
   rootValue: { session: request.session },
   graphiql: <%= graphiql %>
 })));

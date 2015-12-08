@@ -242,21 +242,26 @@ module.exports = generator.Base.extend({
 
     lib: function() {
       this.copy('src/lib/items.js', 'src/lib/items.js');
-    },
-
-    schema: function() {
-      this.copy('src/schema/itemSchema.js', 'src/schema/itemSchema.js');
-    },
-
-    models: function() {
       if(this.authLocal) {
-        this.copy('src/models/User.js', 'src/models/User.js');
+        this.copy('src/lib/users.js', 'src/lib/users.js');
       }
     },
 
-    database: function() {
+    schema: function() {
+      this.copy('src/schema/items.js', 'src/schema/items.js');
+      this.template('src/schema/_index.js', 'src/schema/index.js');
+      if(this.authLocal) {
+        this.copy('src/schema/users.js', 'src/schema/users.js');
+      }
+    },
+
+    models: function() {
       if(this.database === 'mongoose') {
         this.copy('src/models/.placeholder', 'src/models/.placeholder');
+      }
+
+      if(this.authLocal) {
+        this.copy('src/models/User.js', 'src/models/User.js');
       }
     },
 
