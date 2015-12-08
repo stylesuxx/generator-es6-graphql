@@ -1,7 +1,7 @@
 # generator-es6-graphql
 [![npm version](https://badge.fury.io/js/generator-es6-graphql.svg)](https://badge.fury.io/js/generator-es6-graphql) [![Build Status](https://secure.travis-ci.org/stylesuxx/generator-es6-graphql.png?branch=master)](https://travis-ci.org/stylesuxx/generator-es6-graphql) [![Dependency Status](https://david-dm.org/stylesuxx/generator-es6-graphql.svg)](https://david-dm.org/stylesuxx/generator-es6-graphql)
 
-With this [yeoman](http://yeoman.io/) generator you can quickly create an [ES6 (ES2105)](http://es6-features.org/) [graphql](https://facebook.github.io/graphql/) enabled server.
+> This [yeoman](http://yeoman.io/) generator enables you to quickly create an [ES6 (ES2105)](http://es6-features.org/) [graphql](https://facebook.github.io/graphql/) enabled server with a lot of optional additions.
 
 ## Goal
 The goal of this yeoman generator is to enable you to quickly set up an ES6 (ES2105) enabled GraphQL server without dependencies you do not need.
