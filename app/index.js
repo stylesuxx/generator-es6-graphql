@@ -102,7 +102,7 @@ module.exports = generator.Base.extend({
 
     local: function() {
       var done = this.async();
-      if(this.authentication && this.database) {
+      if(this.authentication && this.database !== 'none') {
         this.prompt({
           type: 'confirm',
           name: 'authLocal',
