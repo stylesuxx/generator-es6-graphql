@@ -42,7 +42,7 @@ If you chose to enable *GraphiQL* you can now browse to your [GraphQL endpoint](
 If you chose to enable authentication and selected at least one OAuth strategy, do not forget to add your API credentials for the chosen services to *src/passportConfig.js*.
 
 #### Local Authentication
-If you chose to enable a database and local authentication, you will get a basic *User* model and some routes for free.
+If you chose to enable a database and local authentication, you will get a basic *User* model and routes for authentication.
 
 ##### User model
 The *User* model is very basic and only has the following fields:
@@ -51,15 +51,6 @@ The *User* model is very basic and only has the following fields:
 * password
 
 The Model also provides functionality to check if passwords match and to store passwords encrypted via *bcrypt*.
-
-##### /singup (POST)
-Parameters:
-* username
-* password
-
-Returns:
-* *200* if user could be signed up
-* *400* if username is taken or parameters are missing
 
 ##### /login (POST)
 Parameters:
@@ -78,16 +69,24 @@ Logs out a user and destroys his session.
 Open *GraphiQL* and run:
 ```
 {
-  users {_id, username},
-  self {_id, username}
+  users {_id, username, mail},
+  self {_id, username, mail}
 }
 ```
 
 You will see that *users* is an empty array and *self is null*, this is because there are no users signed up yet and you are not logged in.
 
-Signup via the route mentioned above and then run the commands again. The users array should now contain information about the user you just signed up.
+Sign up a user via mutation:
+```
+mutation {
+  signup("username", "password") {
+    _id,
+    username
+  }
+}
+```
 
-Now login via the route mentioned above and run the commands again. The users array still has one user, but now self should contain information about the currently logged in user.
+Now login via the route mentioned above and query the *user* and *self* again. The users array still has one user, but now self should contain information about the currently logged in user.
 
 If you open the logout route mentioned above and run the commands again, self is null again.
 
