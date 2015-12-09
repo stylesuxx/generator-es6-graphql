@@ -16,7 +16,7 @@ const queryType = new GraphQLObjectType({
   })
 });
 <% if (authLocal) { %>
-  const mutationType = new GraphQLObjectType({
+const mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
     signup: userSignupField,
