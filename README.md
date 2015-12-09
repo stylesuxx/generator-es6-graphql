@@ -88,6 +88,17 @@ mutation {
 
 Now login via the route mentioned above and query the *user* and *self* again. The users array still has one user, but now self should contain information about the currently logged in user.
 
+In a similar way you can now set your E-Mail address:
+```
+mutation {
+  updateEmail(mail: "you@domain.com") {
+    _id,
+    username,
+    mail
+  }
+}
+```
+
 If you open the logout route mentioned above and run the commands again, self is null again.
 
 ## Development
