@@ -1,10 +1,12 @@
 'use strict';
 var generator = require('yeoman-generator');
 var chalk = require('chalk');
+var crypto = require('crypto');
 
 module.exports = generator.Base.extend({
   initializing: function() {
     this.auth = [];
+    this.authLocal = false;
   },
 
   prompting: {
@@ -91,7 +93,7 @@ module.exports = generator.Base.extend({
         type: 'confirm',
         name: 'authentication',
         message: 'Enable passport for authentication',
-        default: false
+        default: true
       }, function(answers) {
         this.authentication = answers.authentication;
 
@@ -99,16 +101,16 @@ module.exports = generator.Base.extend({
       }.bind(this));
     },
 
-    secret: function() {
+    local: function() {
       var done = this.async();
-      if(this.authentication) {
+      if(this.authentication && this.database !== 'none') {
         this.prompt({
-          type: 'input',
-          name: 'secret',
-          message: 'Session secret',
-          default: 'super-secretive-secret'
+          type: 'confirm',
+          name: 'authLocal',
+          message: 'Enable local authentication strategy',
+          default: true
         }, function(answers) {
-          this.secret = answers.secret;
+          this.authLocal = answers.authLocal;
 
           done();
         }.bind(this));
@@ -124,9 +126,9 @@ module.exports = generator.Base.extend({
         this.authFull = [];
 
         var choices = [
-          {name: 'Facebook', value: 'passport-facebook', slug: 'facebook'},
-          {name: 'Github', value: 'passport-github', slug: 'github'},
-          {name: 'Google', value: 'passport-google-oauth', slug: 'google'},
+          { name: 'Facebook', value: 'passport-facebook', slug: 'facebook' },
+          { name: 'Github', value: 'passport-github', slug: 'github' },
+          { name: 'Google', value: 'passport-google-oauth', slug: 'google' },
           //{name: 'Twitter', value: 'passport-twitter'}
         ];
 
@@ -148,6 +150,25 @@ module.exports = generator.Base.extend({
               });
             }
           }.bind(this));
+
+          done();
+        }.bind(this));
+      }
+      else {
+        done();
+      }
+    },
+
+    secret: function() {
+      var done = this.async();
+      if(this.authentication) {
+        this.prompt({
+          type: 'input',
+          name: 'secret',
+          message: 'Session secret',
+          default: crypto.randomBytes(16).toString('hex')
+        }, function(answers) {
+          this.secret = answers.secret;
 
           done();
         }.bind(this));
@@ -205,7 +226,7 @@ module.exports = generator.Base.extend({
     },
 
     app: function() {
-      this.template('src/server.js', 'src/server.js');
+      this.template('src/_server.js', 'src/server.js');
       this.copy('public/.placeholder', 'public/.placeholder');
     },
 
@@ -222,24 +243,35 @@ module.exports = generator.Base.extend({
 
     lib: function() {
       this.copy('src/lib/items.js', 'src/lib/items.js');
+      if(this.authLocal) {
+        this.copy('src/lib/users.js', 'src/lib/users.js');
+      }
     },
 
     schema: function() {
-      this.copy('src/schema/itemSchema.js', 'src/schema/itemSchema.js');
+      this.copy('src/schema/items.js', 'src/schema/items.js');
+      this.template('src/schema/_index.js', 'src/schema/index.js');
+      if(this.authLocal) {
+        this.copy('src/schema/users.js', 'src/schema/users.js');
+      }
     },
 
-    database: function() {
+    models: function() {
       if(this.database === 'mongoose') {
         this.copy('src/models/.placeholder', 'src/models/.placeholder');
+      }
+
+      if(this.authLocal) {
+        this.copy('src/models/User.js', 'src/models/User.js');
       }
     },
 
     authentication: function() {
       if(this.authentication) {
-        this.template('src/passport.js', 'src/passport.js');
+        this.template('src/_passport.js', 'src/passport.js');
 
         if(this.auth.length > 0) {
-          this.template('src/passportConfig.js', 'src/passportConfig.js');
+          this.template('src/_passportConfig.js', 'src/passportConfig.js');
         }
       }
     }
@@ -283,6 +315,10 @@ module.exports = generator.Base.extend({
     if(this.authentication) {
       this.npmInstall(['passport', 'express-session'], {'save': true});
       this.npmInstall(this.auth, {'save': true});
+    }
+
+    if(this.authLocal) {
+      this.npmInstall(['passport-local', 'body-parser', 'express-validator', 'bcrypt'], {'save': true});
     }
   },
 
