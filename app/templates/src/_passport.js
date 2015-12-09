@@ -22,21 +22,7 @@ const LocalStrategy = passportLocal.Strategy;<% } %><%if (auth.length > 0 || aut
 
 <% }); if(authLocal) { %>passport.use(new LocalStrategy(
   function(username, password, done) {
-    var user = {};
-    var findUser = User.findOne({ username: username }).exec();
-    findUser.then((data) => {
-      user = data;
-      return user.validPassword(password);
-    }).then(()=> {
-      var data = {
-        _id: user._id,
-        username: user.username
-      };
-
-      return done(null, data);
-    }, (err)=> {
-      return done(null, false, { message: 'Username and password do not match.' });
-    });
+    users.login(username, password, done);
   }
 ));
 
