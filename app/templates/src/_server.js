@@ -1,11 +1,14 @@
-import { ItemSchema } from './schema/itemSchema';
+import { Schema } from './schema';
 import graphqlHTTP from 'express-graphql';
 import express from 'express';
 import 'babel-polyfill';
 import path from 'path';<% if (database === 'mongoose') { %>
 import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
-import session from 'express-session';<% } %>
+import session from 'express-session';<% } if (authLocal) { %>
+import bodyParser from 'body-parser';
+import validator from 'express-validator';
+import User from './models/User';<% } %>
 
 const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
 const server = global.server = express();<% if (database === 'mongoose') { %>
@@ -13,7 +16,10 @@ const server = global.server = express();<% if (database === 'mongoose') { %>
 mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
 
 server.set('port', port);
-server.use(express.static(path.join(__dirname, 'public')));<% if (authentication) { %>
+server.use(express.static(path.join(__dirname, 'public')));<% if (authLocal) { %>
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+server.use(validator());<% } %><% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(session({
@@ -39,8 +45,47 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));<% }; %><% } %>
-server.use('<%= graphqlroute %>', graphqlHTTP({schema: ItemSchema, graphiql: <%= graphiql %>}));
 
+server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
+  schema: Schema,
+  rootValue: { session: request.session },
+  graphiql: <%= graphiql %>
+})));
+<% if(authLocal) { %>
+server.post('/signup', function(req, res) {
+  req.assert('username', 'Username is required').notEmpty();
+  req.assert('password', 'Password is required').notEmpty();
+
+  var errors = req.validationErrors();
+  if(errors) {
+    res.status(400).json(errors);
+    return;
+  }
+
+  var user = new User({
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  user.save().then((user) => {
+    res.status(200).send();
+    return;
+  }, (err) => {
+    res.status(400).json([{msg: 'Username is already taken'}]);
+    return;
+  });
+});
+
+server.post('/login', passport.authenticate('local'), function(req, res) {
+  res.sendStatus(200);
+});
+
+server.get('/logout', function(req, res) {
+  req.logout();
+  req.session.destroy();
+  res.sendStatus(200);
+});
+<% } %>
 server.listen(server.get('port'), () => {
   if (process.send) {
     process.send('online');
