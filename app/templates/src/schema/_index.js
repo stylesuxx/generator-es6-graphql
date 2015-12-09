@@ -9,6 +9,7 @@ import {
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
+  description: 'Root for query operations.',
   fields: () => ({
     getItem: getItemField<% if (authLocal) { %>,
     self: selfField,
@@ -18,6 +19,7 @@ const queryType = new GraphQLObjectType({
 <% if (authLocal) { %>
 const mutationType = new GraphQLObjectType({
   name: 'Mutation',
+  description: 'Root for mutation operations.',
   fields: () => ({
     signup: userSignupField,
     updateEmail: userUpdateMailField

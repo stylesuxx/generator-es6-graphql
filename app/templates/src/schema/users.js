@@ -1,23 +1,30 @@
-import { GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList,
+  GraphQLID
+} from 'graphql';
+import { GraphQLError } from 'graphql/error';
+import { GraphQLEmail } from './types';
 import Users from '../lib/users';
 
 const users = new Users();
 
 const userType = new GraphQLObjectType({
   name: 'User',
-  description: 'A users public information.',
+  description: 'Representation of public user data.',
   fields: () => ({
     _id: {
-      description: 'The users id.',
-      type: GraphQLString
+      description: 'Unique user id.',
+      type: GraphQLID
     },
     username: {
-      description: 'The users username.',
+      description: 'Unique username.',
       type: GraphQLString
     },
     mail: {
-      description: 'The users E-Mail address.',
-      type: GraphQLString
+      description: 'Optional E-Mail address.',
+      type: GraphQLEmail
     }
   })
 });
@@ -29,6 +36,7 @@ const _self = {
     if(session.passport) {
       return session.passport.user;
     }
+    throw new GraphQLError('Query error: Not logged in');
   }
 };
 
@@ -41,31 +49,32 @@ const _list = {
 };
 
 const _updateMail = {
-  description: 'Update your mail address.',
+  description: 'Update mail address of the currently logged in user.',
   type: userType,
   args: {
     mail: {
-      description: 'The Mail address to set.',
-      type: GraphQLString
+      description: 'Non empty, valid E-Mail address.',
+      type: GraphQLEmail
     }
   },
   resolve(parentValue, _, { rootValue: { session } }) {
     if(session.passport) {
       return users.updateMail(session.passport.user._id, _.mail);
     }
+    throw new GraphQLError('Query error: Not logged in');
   }
 }
 
 const _signup = {
-  description: 'Signup for a user account.',
+  description: 'Register a new user account. Returns newly created user or null if username is taken.',
   type: userType,
   args: {
     username: {
-      description: 'The chosen username.',
+      description: 'Non empty username for new account.',
       type: GraphQLString
     },
     password: {
-      description: 'The chosen password.',
+      description: 'Non empty password for new account.',
       type: GraphQLString
     }
   },
