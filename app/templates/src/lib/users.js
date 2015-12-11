@@ -32,10 +32,7 @@ class Users {
     const getUser = User.findOne({_id: id}).exec();
     return getUser.then((user) => {
       user.mail = mail;
-      const saveUser = user.save();
-      return saveUser.then((user) => {
-        return user;
-      })
+      return user.save();
     });
   }
 }
