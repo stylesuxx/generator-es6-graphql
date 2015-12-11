@@ -22,6 +22,14 @@ const userType = new GraphQLObjectType({
       description: 'Unique username.',
       type: GraphQLString
     },
+    createdAt: {
+      description: 'Time of user creation.',
+      type: GraphQLString
+    },
+    updatedAt: {
+      description: 'Time of last user update.',
+      type: GraphQLString
+    },
     mail: {
       description: 'Optional E-Mail address.',
       type: GraphQLEmail

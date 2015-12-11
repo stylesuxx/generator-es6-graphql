@@ -2,10 +2,8 @@ import User from '../models/User';
 
 class Users {
   getList() {
-    const getUsers = User.find({}, '_id username').exec();
-    return getUsers.then((users) => {
-      return users;
-    });
+    const getUsers = User.find({}).exec();
+    return getUsers;
   }
 
   signup(username, password) {
@@ -24,12 +22,7 @@ class Users {
       user = data;
       return user.validPassword(password);
     }).then(()=> {
-      var data = {
-        _id: user._id,
-        username: user.username
-      };
-
-      return done(null, data);
+      return done(null, user);
     }, (err)=> {
       return done(null, false, { message: 'Username and password do not match.' });
     });
