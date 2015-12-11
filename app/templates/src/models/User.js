@@ -5,19 +5,21 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
-  createdAt: { type: Date },
   updatedAt: { type: Date },
   mail: { type: String }
 });
 
+UserSchema
+.virtual('createdAt')
+.get(function () {
+  return this._id.getTimestamp();
+});
+
 UserSchema.pre('save', function(next) {
   var user = this;
-
   const now = new Date();
+
   user.updatedAt = now;
-  if(!user.createdAt) {
-    user.createdAt = now;
-  }
 
   if(!user.isModified('password')) return next();
   bcrypt.genSalt(function(err, salt) {
