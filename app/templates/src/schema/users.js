@@ -4,8 +4,12 @@ import {
   GraphQLList,
   GraphQLID
 } from 'graphql';
+import {
+  GraphQLEmail,
+  GraphQLPassword,
+  GraphQLDateTime
+} from 'graphql-custom-types';
 import { GraphQLError } from 'graphql/error';
-import { GraphQLEmail, GraphQLPassword } from 'graphql-custom-types';
 import Users from '../lib/users';
 
 const users = new Users();
@@ -24,11 +28,11 @@ const userType = new GraphQLObjectType({
     },
     createdAt: {
       description: 'Time of user creation.',
-      type: GraphQLString
+      type: GraphQLDateTime
     },
     updatedAt: {
       description: 'Time of last user update.',
-      type: GraphQLString
+      type: GraphQLDateTime
     },
     mail: {
       description: 'Optional E-Mail address.',
