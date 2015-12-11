@@ -5,7 +5,7 @@ import {
   GraphQLID
 } from 'graphql';
 import { GraphQLError } from 'graphql/error';
-import { GraphQLEmail } from 'graphql-custom-types';
+import { GraphQLEmail, GraphQLPassword } from 'graphql-custom-types';
 import Users from '../lib/users';
 
 const users = new Users();
@@ -70,12 +70,12 @@ const _signup = {
   type: userType,
   args: {
     username: {
-      description: 'Non empty username for new account.',
+      description: 'Username for new account.',
       type: GraphQLString
     },
     password: {
-      description: 'Non empty password for new account.',
-      type: GraphQLString
+      description: 'Password for new account.',
+      type: new GraphQLPassword(6)
     }
   },
   resolve(parentValue, _, { rootValue: { data } }) {
