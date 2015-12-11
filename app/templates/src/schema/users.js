@@ -5,7 +5,7 @@ import {
   GraphQLID
 } from 'graphql';
 import { GraphQLError } from 'graphql/error';
-import { GraphQLEmail } from './types';
+import { GraphQLEmail } from 'graphql-custom-types';
 import Users from '../lib/users';
 
 const users = new Users();
