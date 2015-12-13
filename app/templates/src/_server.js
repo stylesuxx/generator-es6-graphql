@@ -47,12 +47,6 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));<% }; %><% } %>
-
-server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
-  schema: Schema,
-  rootValue: { session: request.session },
-  graphiql: <%= graphiql %>
-})));
 <% if(authLocal) { %>
 server.post('/login', passport.authenticate('local'), function(req, res) {
   res.sendStatus(200);
@@ -64,6 +58,12 @@ server.get('/logout', function(req, res) {
   res.sendStatus(200);
 });
 <% } %>
+server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
+  schema: Schema,
+  rootValue: { session: request.session },
+  graphiql: <%= graphiql %>
+})));
+
 server.listen(server.get('port'), () => {
   console.log('The server is running at http://localhost:' + server.get('port'));
 });
