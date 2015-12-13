@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.7.0] - 2015-12-13
 ### Added
 - Hot loading support
 - Persist session on server restart when mongoose is enabled
