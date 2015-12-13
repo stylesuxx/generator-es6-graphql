@@ -7,10 +7,9 @@ import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
 import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
-import validator from 'express-validator';
 import User from './models/User';<% } %>
 
-const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
+const port = (!global.process.env.PORT) ? 1234 : global.process.env.PORT;
 const server = global.server = express();<% if (database === 'mongoose') { %>
 
 mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
@@ -18,8 +17,7 @@ mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));<% if (authLocal) { %>
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-server.use(validator());<% } %><% if (authentication) { %>
+server.use(bodyParser.json());<% } %><% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(session({
@@ -63,9 +61,5 @@ server.get('/logout', function(req, res) {
 });
 <% } %>
 server.listen(server.get('port'), () => {
-  if (process.send) {
-    process.send('online');
-  } else {
-    console.log('The server is running at http://localhost:' + server.get('port'));
-  }
+  console.log('The server is running at http://localhost:' + server.get('port'));
 });

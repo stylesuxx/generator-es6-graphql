@@ -232,6 +232,7 @@ module.exports = generator.Base.extend({
 
     tools: function() {
       this.copy('tools/lib/copy.js', 'tools/lib/copy.js');
+      this.copy('tools/lib/watch.js', 'tools/lib/watch.js');
       this.copy('tools/build.js', 'tools/build.js');
       this.copy('tools/bundle.js', 'tools/bundle.js');
       this.copy('tools/clean.js', 'tools/clean.js');
@@ -297,6 +298,7 @@ module.exports = generator.Base.extend({
       'babel-preset-stage-1',
       'del',
       'eslint',
+      'gaze',
       'lodash',
       'mkdirp',
       'ncp',
@@ -321,7 +323,6 @@ module.exports = generator.Base.extend({
       this.npmInstall([
         'passport-local',
         'body-parser',
-        'express-validator',
         'bcrypt',
         'graphql-custom-types'
       ], {'save': true});

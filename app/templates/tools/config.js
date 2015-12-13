@@ -5,27 +5,10 @@ import merge from 'lodash/object/merge';
 const DEBUG = !process.argv.includes('release');
 const WATCH = global.WATCH === undefined ? false : global.WATCH;
 const VERBOSE = process.argv.includes('verbose');
-const STYLE_LOADER = 'style-loader/useable';
-const CSS_LOADER = DEBUG ? 'css-loader' : 'css-loader?minimize';
-const AUTOPREFIXER_BROWSERS = [
-  'Android 2.3',
-  'Android >= 4',
-  'Chrome >= 20',
-  'Firefox >= 24',
-  'Explorer >= 8',
-  'iOS >= 6',
-  'Opera >= 12',
-  'Safari >= 6'
-];
 const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
   '__DEV__': DEBUG
 };
-
-//
-// Common configuration chunk to be used for both
-// client-side (app.js) and server-side (server.js) bundles
-// -----------------------------------------------------------------------------
 
 const config = {
   output: {
@@ -52,18 +35,13 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin()
   ],
 
-  resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
-  },
-
   module: {
     loaders: [{
-      test: /\.jsx?$/,
+      test: /\.js$/,
       include: [
-        path.resolve(__dirname, '../node_modules/react-routing/src'),
         path.resolve(__dirname, '../src')
       ],
-      loaders: [...(WATCH && ['react-hot']), 'babel-loader']
+      loaders: ['babel-loader']
     }, {
       test: /\.json$/,
       loader: 'json-loader'
@@ -77,55 +55,8 @@ const config = {
       test: /\.(eot|tft|wav|mp3)$/,
       loader: 'file-loader'
     }]
-  },
-
-  /*
-  postcss: [
-    require('postcss-nested')(),
-    require('cssnext')(),
-    require('autoprefixer-core')(AUTOPREFIXER_BROWSERS)
-  ]
-  */
-};
-
-//
-// Configuration for the client-side bundle (app.js)
-// -----------------------------------------------------------------------------
-/*
-const appConfig = merge({}, config, {
-  entry: [
-    ...(WATCH && ['webpack-hot-middleware/client']),
-    './src/app.js'
-  ],
-  output: {
-    path: path.join(__dirname, '../build/public'),
-    filename: 'app.js'
-  },
-  devtool: DEBUG ? 'source-map' : false,
-  plugins: [
-    ...config.plugins,
-    new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
-    ...(!DEBUG && [
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: VERBOSE}}),
-      new webpack.optimize.AggressiveMergingPlugin()
-    ]),
-    ...(WATCH && [
-      new webpack.HotModuleReplacementPlugin()
-    ])
-  ],
-  module: {
-    loaders: [...config.module.loaders, {
-      test: /\.css$/,
-      loader: `${STYLE_LOADER}!${CSS_LOADER}!postcss-loader`
-    }]
   }
-});
-*/
-
-//
-// Configuration for the server-side bundle (server.js)
-// -----------------------------------------------------------------------------
+};
 
 const serverConfig = merge({}, config, {
   entry: './src/server.js',
@@ -158,14 +89,7 @@ const serverConfig = merge({}, config, {
     new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': true})),
     new BannerPlugin('require("source-map-support").install();',
       { raw: true, entryOnly: false })
-  ],
-  module: {
-    loaders: [...config.module.loaders, {
-      test: /\.css$/,
-      loader: `${CSS_LOADER}!postcss-loader`
-    }]
-  }
+  ]
 });
 
-//export default [appConfig, serverConfig];
 export default [serverConfig];
