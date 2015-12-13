@@ -30,7 +30,7 @@ module.exports = generator.Base.extend({
         type: 'input',
         name: 'graphqlroute',
         message: 'Route to the GraphQL endpoint',
-        default: '/graphql'
+        default: '/'
       }, function(answers) {
         this.graphqlroute = answers.graphqlroute;
         if(this.graphqlroute[0] != '/') {
