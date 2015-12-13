@@ -10,7 +10,7 @@ export default async () => {
 
   replace({
     regex: '"start".*',
-    replacement: '"start": "node server.js"',
+    replacement: '"start": "node server.js",',
     paths: [path.join(__dirname, '../build/package.json')],
     recursive: false,
     silent: false
