@@ -232,6 +232,7 @@ module.exports = generator.Base.extend({
 
     tools: function() {
       this.copy('tools/lib/copy.js', 'tools/lib/copy.js');
+      this.copy('tools/lib/watch.js', 'tools/lib/watch.js');
       this.copy('tools/build.js', 'tools/build.js');
       this.copy('tools/bundle.js', 'tools/bundle.js');
       this.copy('tools/clean.js', 'tools/clean.js');
