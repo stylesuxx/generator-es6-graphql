@@ -96,6 +96,7 @@ module.exports = generator.Base.extend({
         default: true
       }, function(answers) {
         this.authentication = answers.authentication;
+        this.secret = crypto.randomBytes(16).toString('hex')
 
         done();
       }.bind(this));
@@ -158,54 +159,6 @@ module.exports = generator.Base.extend({
         done();
       }
     },
-
-    secret: function() {
-      var done = this.async();
-      if(this.authentication) {
-        this.prompt({
-          type: 'input',
-          name: 'secret',
-          message: 'Session secret',
-          default: crypto.randomBytes(16).toString('hex')
-        }, function(answers) {
-          this.secret = answers.secret;
-
-          done();
-        }.bind(this));
-      }
-      else {
-        done();
-      }
-    },
-
-    /*
-    store: function() {
-      var done = this.async();
-      if(this.authentication) {
-        this.prompt({
-          type: 'list',
-          name: 'store',
-          message: 'Choose a session store',
-          choices: [
-            {name: 'Memory', value: 'memory'},
-            //{name: 'Mongoose', value: 'mongoose'}
-          ],
-          default: 0
-        }, function(answers) {
-          this.store = answers.store;
-
-          if(this.store === 'mongoose') {
-            this.database = 'mongoose';
-          }
-
-          done();
-        }.bind(this));
-      }
-      else {
-        done();
-      }
-    }
-    */
   },
 
   writing: {
@@ -309,11 +262,7 @@ module.exports = generator.Base.extend({
     ], {'saveDev': true});
 
     if(this.database === 'mongoose') {
-      this.npmInstall(['mongoose'], {'save': true});
-    }
-
-    if(this.session === 'mongoose') {
-      this.npmInstall(['connect-mongoose'], {'save': true});
+      this.npmInstall(['mongoose', 'connect-mongo'], {'save': true});
     }
 
     if(this.authentication) {
