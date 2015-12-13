@@ -7,8 +7,10 @@ import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
 import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
-import User from './models/User';<% } %>
+import User from './models/User';
+import mongoStore from 'connect-mongo';<% } %>
 
+<% if (authLocal) { %>const MongoStore = mongoStore(session);<% } %>
 const config = require('./config/main.json');
 const port = (!global.process.env.PORT) ? 1234 : global.process.env.PORT;
 const server = global.server = express();<% if (database === 'mongoose') { %>
@@ -24,7 +26,8 @@ server.use(passport.session());
 server.use(session({
   secret: config.sessionSecret,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true<% if (authLocal) { %>,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })<% } %>
 }));<% if (auth.indexOf('passport-github') > -1) { %>
 
 server.get('/auth/github', passport.authenticate('github'));
