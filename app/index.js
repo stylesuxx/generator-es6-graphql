@@ -222,11 +222,12 @@ module.exports = generator.Base.extend({
     },
 
     gitfiles: function() {
-      this.copy('.gitignore', '.gitignore');
+      this.copy('gitignore', '.gitignore');
     },
 
     app: function() {
       this.template('src/_server.js', 'src/server.js');
+      this.template('src/config/_main.json', 'src/config/main.json');
       this.copy('public/.placeholder', 'public/.placeholder');
     },
 
@@ -299,6 +300,7 @@ module.exports = generator.Base.extend({
       'del',
       'eslint',
       'gaze',
+      'json-loader',
       'lodash',
       'mkdirp',
       'ncp',

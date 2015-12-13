@@ -9,10 +9,11 @@ import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
 import User from './models/User';<% } %>
 
+const config = require('./config/main.json');
 const port = (!global.process.env.PORT) ? 1234 : global.process.env.PORT;
 const server = global.server = express();<% if (database === 'mongoose') { %>
 
-mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
+mongoose.connect(config.mongoDB);<% } %>
 
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));<% if (authLocal) { %>
@@ -21,7 +22,7 @@ server.use(bodyParser.json());<% } %><% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(session({
-  secret: '<%= secret %>',
+  secret: config.sessionSecret,
   resave: true,
   saveUninitialized: true
 }));<% if (auth.indexOf('passport-github') > -1) { %>
