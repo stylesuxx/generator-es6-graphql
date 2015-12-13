@@ -7,7 +7,6 @@ import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
 import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
-import validator from 'express-validator';
 import User from './models/User';<% } %>
 
 const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
@@ -18,8 +17,7 @@ mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));<% if (authLocal) { %>
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-server.use(validator());<% } %><% if (authentication) { %>
+server.use(bodyParser.json());<% } %><% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(session({
