@@ -273,7 +273,7 @@ module.exports = generator.Base.extend({
         this.template('src/_passport.js', 'src/passport.js');
 
         if(this.auth.length > 0) {
-          this.template('src/_passportConfig.js', 'src/passportConfig.js');
+          this.template('src/config/_passport.json', 'src/config/passport.json');
         }
       }
     }
@@ -335,7 +335,7 @@ module.exports = generator.Base.extend({
     finished: function() {
       this.log(chalk.bold.green('\nGenerator setup finished.'));
       if(this.auth.length > 0) {
-        this.log(chalk.bold.white('Do not forget to add your API credentials to src/passportConfig.js'));
+        this.log(chalk.bold.white('Do not forget to add your API credentials to src/config/passport.json'));
       }
       this.log('If you see no errors above, run the server:');
       this.log(chalk.bold.white('npm start'));
