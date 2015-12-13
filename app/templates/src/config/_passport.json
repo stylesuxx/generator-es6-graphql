@@ -1,0 +1,7 @@
+{
+<% authFull.forEach(function(auth, index){  %>  "<%- auth.slug %>": {
+    "id": "<%- auth.slug %>-id",
+    "secret": "<%- auth.slug %>-secret",
+    "cb": "http://localhost:1234/auth/<%- auth.slug %>/callback"
+  }<% if(index !== authFull.length - 1) { %>,<% } %>
+<% }); %>}

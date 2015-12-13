@@ -62,8 +62,8 @@ module.exports = generator.Base.extend({
         name: 'database',
         message: 'Choose database',
         choices: [
-          {name: 'None', value: 'none'},
-          {name: 'Mongoose', value: 'mongoose'}
+          {name: 'Mongoose', value: 'mongoose'},
+          {name: 'None', value: 'none'}
         ],
         default: 0
       }, function(answers) {
@@ -96,6 +96,7 @@ module.exports = generator.Base.extend({
         default: true
       }, function(answers) {
         this.authentication = answers.authentication;
+        this.secret = crypto.randomBytes(16).toString('hex')
 
         done();
       }.bind(this));
@@ -158,54 +159,6 @@ module.exports = generator.Base.extend({
         done();
       }
     },
-
-    secret: function() {
-      var done = this.async();
-      if(this.authentication) {
-        this.prompt({
-          type: 'input',
-          name: 'secret',
-          message: 'Session secret',
-          default: crypto.randomBytes(16).toString('hex')
-        }, function(answers) {
-          this.secret = answers.secret;
-
-          done();
-        }.bind(this));
-      }
-      else {
-        done();
-      }
-    },
-
-    /*
-    store: function() {
-      var done = this.async();
-      if(this.authentication) {
-        this.prompt({
-          type: 'list',
-          name: 'store',
-          message: 'Choose a session store',
-          choices: [
-            {name: 'Memory', value: 'memory'},
-            //{name: 'Mongoose', value: 'mongoose'}
-          ],
-          default: 0
-        }, function(answers) {
-          this.store = answers.store;
-
-          if(this.store === 'mongoose') {
-            this.database = 'mongoose';
-          }
-
-          done();
-        }.bind(this));
-      }
-      else {
-        done();
-      }
-    }
-    */
   },
 
   writing: {
@@ -222,16 +175,18 @@ module.exports = generator.Base.extend({
     },
 
     gitfiles: function() {
-      this.copy('.gitignore', '.gitignore');
+      this.copy('gitignore', '.gitignore');
     },
 
     app: function() {
       this.template('src/_server.js', 'src/server.js');
+      this.template('src/config/_main.json', 'src/config/main.json');
       this.copy('public/.placeholder', 'public/.placeholder');
     },
 
     tools: function() {
       this.copy('tools/lib/copy.js', 'tools/lib/copy.js');
+      this.copy('tools/lib/watch.js', 'tools/lib/watch.js');
       this.copy('tools/build.js', 'tools/build.js');
       this.copy('tools/bundle.js', 'tools/bundle.js');
       this.copy('tools/clean.js', 'tools/clean.js');
@@ -271,7 +226,7 @@ module.exports = generator.Base.extend({
         this.template('src/_passport.js', 'src/passport.js');
 
         if(this.auth.length > 0) {
-          this.template('src/_passportConfig.js', 'src/passportConfig.js');
+          this.template('src/config/_passport.json', 'src/config/passport.json');
         }
       }
     }
@@ -297,6 +252,8 @@ module.exports = generator.Base.extend({
       'babel-preset-stage-1',
       'del',
       'eslint',
+      'gaze',
+      'json-loader',
       'lodash',
       'mkdirp',
       'ncp',
@@ -305,11 +262,7 @@ module.exports = generator.Base.extend({
     ], {'saveDev': true});
 
     if(this.database === 'mongoose') {
-      this.npmInstall(['mongoose'], {'save': true});
-    }
-
-    if(this.session === 'mongoose') {
-      this.npmInstall(['connect-mongoose'], {'save': true});
+      this.npmInstall(['mongoose', 'connect-mongo'], {'save': true});
     }
 
     if(this.authentication) {
@@ -321,7 +274,6 @@ module.exports = generator.Base.extend({
       this.npmInstall([
         'passport-local',
         'body-parser',
-        'express-validator',
         'bcrypt',
         'graphql-custom-types'
       ], {'save': true});
@@ -332,7 +284,7 @@ module.exports = generator.Base.extend({
     finished: function() {
       this.log(chalk.bold.green('\nGenerator setup finished.'));
       if(this.auth.length > 0) {
-        this.log(chalk.bold.white('Do not forget to add your API credentials to src/passportConfig.js'));
+        this.log(chalk.bold.white('Do not forget to add your API credentials to src/config/passport.json'));
       }
       this.log('If you see no errors above, run the server:');
       this.log(chalk.bold.white('npm start'));

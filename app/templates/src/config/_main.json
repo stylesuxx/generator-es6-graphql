@@ -1,0 +1,4 @@
+{
+  "sessionSecret": "<%= secret %>"<% if(database === 'mongoose') { %>,
+  "mongoDB": "mongodb://localhost/<%= databaseName %>"<% } %>
+}

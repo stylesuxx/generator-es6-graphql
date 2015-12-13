@@ -10,6 +10,7 @@ This means that the choice of for example *database* and *testing framework* is 
 * *mongoose* as database
 * *passport* for authentication
 * *local authentication* with basic user model skeleton
+* *persistent sessions* if mongoose and authentication are enabled
 
 ## Installation
 Install yo and the generator globally by running:
@@ -79,7 +80,7 @@ You will see that *users* is an empty array and *self is null*, this is because 
 Sign up a user via mutation:
 ```
 mutation {
-  signup("username", "password") {
+  signup(username: "username", password: "password") {
     _id,
     username
   }

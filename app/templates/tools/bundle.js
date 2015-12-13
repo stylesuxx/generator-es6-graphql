@@ -2,8 +2,6 @@ import webpack from 'webpack';
 import config from './config';
 
 export default async () => new Promise((resolve, reject) => {
-  console.log('Bundling...');
-
   const bundler = webpack(config);
   let bundlerRunCount = 0;
 

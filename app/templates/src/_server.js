@@ -7,25 +7,27 @@ import mongoose from 'mongoose';<% } %><% if (authentication) { %>
 import passport from './passport';
 import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
-import validator from 'express-validator';
-import User from './models/User';<% } %>
+import User from './models/User';
+import mongoStore from 'connect-mongo';<% } %>
 
-const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
+<% if (authLocal) { %>const MongoStore = mongoStore(session);<% } %>
+const config = require('./config/main.json');
+const port = (!global.process.env.PORT) ? 1234 : global.process.env.PORT;
 const server = global.server = express();<% if (database === 'mongoose') { %>
 
-mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
+mongoose.connect(config.mongoDB);<% } %>
 
 server.set('port', port);
 server.use(express.static(path.join(__dirname, 'public')));<% if (authLocal) { %>
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-server.use(validator());<% } %><% if (authentication) { %>
+server.use(bodyParser.json());<% } %><% if (authentication) { %>
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(session({
-  secret: '<%= secret %>',
+  secret: config.sessionSecret,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true<% if (authLocal) { %>,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })<% } %>
 }));<% if (auth.indexOf('passport-github') > -1) { %>
 
 server.get('/auth/github', passport.authenticate('github'));
@@ -45,12 +47,6 @@ server.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));<% }; %><% } %>
-
-server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
-  schema: Schema,
-  rootValue: { session: request.session },
-  graphiql: <%= graphiql %>
-})));
 <% if(authLocal) { %>
 server.post('/login', passport.authenticate('local'), function(req, res) {
   res.sendStatus(200);
@@ -62,10 +58,12 @@ server.get('/logout', function(req, res) {
   res.sendStatus(200);
 });
 <% } %>
+server.use('<%= graphqlroute %>', graphqlHTTP(request => ({
+  schema: Schema,
+  rootValue: { session: request.session },
+  graphiql: <%= graphiql %>
+})));
+
 server.listen(server.get('port'), () => {
-  if (process.send) {
-    process.send('online');
-  } else {
-    console.log('The server is running at http://localhost:' + server.get('port'));
-  }
+  console.log('The server is running at http://localhost:' + server.get('port'));
 });
