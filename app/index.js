@@ -62,8 +62,8 @@ module.exports = generator.Base.extend({
         name: 'database',
         message: 'Choose database',
         choices: [
-          {name: 'None', value: 'none'},
-          {name: 'Mongoose', value: 'mongoose'}
+          {name: 'Mongoose', value: 'mongoose'},
+          {name: 'None', value: 'none'}
         ],
         default: 0
       }, function(answers) {
