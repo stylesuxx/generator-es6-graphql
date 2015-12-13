@@ -83,16 +83,16 @@ describe('generator:app', function () {
     it('creates passport related files', function () {
       var expected = [
         'src/passport.js',
-        'src/passportConfig.js'
+        'src/config/passport.json'
       ];
 
       assert.file(expected);
     });
 
-    it('fills src/passportConfig.js with correct information', function () {
-      assert.fileContent('src/passportConfig.js',  /facebook:/);
-      assert.fileContent('src/passportConfig.js',  /github:/);
-      assert.fileContent('src/passportConfig.js',  /google:/);
+    it('fills src/config/passport.json with correct information', function () {
+      assert.fileContent('src/config/passport.json',  /"facebook":/);
+      assert.fileContent('src/config/passport.json',  /"github":/);
+      assert.fileContent('src/config/passport.json',  /"google":/);
     });
   });
 
@@ -134,16 +134,19 @@ describe('generator:app', function () {
     defaultFiles(it);
     runAll(it);
 
-    it('fills src/passportConfig.js with correct information', function () {
-      assert.fileContent('src/passportConfig.js',  /facebook:/);
-      assert.fileContent('src/passportConfig.js',  /github:/);
-      assert.fileContent('src/passportConfig.js',  /google:/);
+    it('creates passport related files', function () {
+      var expected = [
+        'src/passport.js',
+        'src/config/passport.json'
+      ];
+
+      assert.file(expected);
     });
 
-    it('fills src/passportConfig.js with correct information', function () {
-      assert.fileContent('src/passportConfig.js',  /facebook:/);
-      assert.fileContent('src/passportConfig.js',  /github:/);
-      assert.fileContent('src/passportConfig.js',  /google:/);
+    it('fills src/config/passport.json with correct information', function () {
+      assert.fileContent('src/config/passport.json',  /"facebook":/);
+      assert.fileContent('src/config/passport.json',  /"github":/);
+      assert.fileContent('src/config/passport.json',  /"google":/);
     });
   });
 });
