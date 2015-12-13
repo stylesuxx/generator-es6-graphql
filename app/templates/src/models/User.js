@@ -15,6 +15,9 @@ UserSchema
   return this._id.getTimestamp();
 });
 
+UserSchema.set('toJSON', { virtuals: true, getters: true });
+UserSchema.set('toObject', { virtuals: true, getters: true });
+
 UserSchema.pre('save', function(next) {
   var user = this;
   const now = new Date();
