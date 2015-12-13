@@ -2,8 +2,6 @@ import path from 'path';
 import cp from 'child_process';
 
 export default (env) => new Promise((resolve, reject) => {
-  console.log('Serving...');
-
   const server = cp.fork(path.join(__dirname, '../build/server.js'), {
     env: Object.assign({NODE_ENV: env}, process.env)
   });

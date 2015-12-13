@@ -3,8 +3,6 @@ import replace from 'replace';
 import copy from './lib/copy';
 
 export default async () => {
-  console.log('Copying...');
-
   await Promise.all([
     copy('package.json', 'build/package.json'),
     copy('public', 'build/public')
