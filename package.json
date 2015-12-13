@@ -25,7 +25,6 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "crypto": "0.0.3",
-    "gaze": "^0.5.2",
     "yeoman-generator": "^0.21.1"
   },
   "devDependencies": {

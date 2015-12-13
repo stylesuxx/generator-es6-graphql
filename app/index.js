@@ -297,6 +297,7 @@ module.exports = generator.Base.extend({
       'babel-preset-stage-1',
       'del',
       'eslint',
+      'gaze',
       'lodash',
       'mkdirp',
       'ncp',
