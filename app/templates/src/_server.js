@@ -9,7 +9,7 @@ import session from 'express-session';<% } if (authLocal) { %>
 import bodyParser from 'body-parser';
 import User from './models/User';<% } %>
 
-const port = (global.process.env.NODE_ENV == 'develop') ? 1234 : 8080;
+const port = (!global.process.env.PORT) ? 1234 : global.process.env.PORT;
 const server = global.server = express();<% if (database === 'mongoose') { %>
 
 mongoose.connect('mongodb://localhost/<%= databaseName %>');<% } %>
