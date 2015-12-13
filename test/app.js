@@ -58,7 +58,31 @@ describe('generator:app', function () {
     before(function (done) {
       helpers.run(path.join(__dirname, '../app'))
         .withPrompts({
-          name: 'temp'
+          name: 'temp',
+          database: 'mongoose',
+          authLocal: true
+        })
+        .on('end', done);
+    });
+
+    defaultFiles(it);
+    runAll(it);
+
+    it('creates passport related files', function () {
+      var expected = [
+        'src/passport.js'
+      ];
+
+      assert.file(expected);
+    });
+  });
+
+  describe('no database', function () {
+    before(function (done) {
+      helpers.run(path.join(__dirname, '../app'))
+        .withPrompts({
+          name: 'temp',
+          database: 'none'
         })
         .on('end', done);
     });
@@ -93,29 +117,6 @@ describe('generator:app', function () {
       assert.fileContent('src/config/passport.json',  /"facebook":/);
       assert.fileContent('src/config/passport.json',  /"github":/);
       assert.fileContent('src/config/passport.json',  /"google":/);
-    });
-  });
-
-  describe('local', function () {
-    before(function (done) {
-      helpers.run(path.join(__dirname, '../app'))
-        .withPrompts({
-          name: 'temp',
-          database: 'mongoose',
-          authLocal: true
-        })
-        .on('end', done);
-    });
-
-    defaultFiles(it);
-    runAll(it);
-
-    it('creates passport related files', function () {
-      var expected = [
-        'src/passport.js'
-      ];
-
-      assert.file(expected);
     });
   });
 
