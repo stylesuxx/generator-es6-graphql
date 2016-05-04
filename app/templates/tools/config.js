@@ -3,7 +3,7 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import merge from 'lodash.merge';
 
 const DEBUG = !process.argv.includes('release');
-const WATCH = global.WATCH === undefined ? false : global.WATCH;
+const WATCH = global.WATCH || false;
 const VERBOSE = process.argv.includes('verbose');
 const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
