@@ -1,6 +1,16 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- NodeJs v6.0 support
+
+### Updated
+- Dependencies
+- Tests
+
+### Removed
+- iojs support
+- support for NodeJs versions < 4.4.3
 
 ## [0.7.0] - 2015-12-13
 ### Added
