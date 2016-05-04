@@ -254,7 +254,7 @@ module.exports = generator.Base.extend({
       'eslint',
       'gaze',
       'json-loader',
-      'lodash',
+      'lodash.merge',
       'mkdirp',
       'ncp',
       'path',
