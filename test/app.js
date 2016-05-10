@@ -1,8 +1,8 @@
 'use strict';
 var fs = require('fs');
 var path = require('path');
-var assert = require('yeoman-generator').assert;
-var helpers = require('yeoman-generator').test;
+var assert = require('yeoman-assert');
+var helpers = require('yeoman-test');
 var mockery = require('mockery');
 
 var runAll = function(it) {
@@ -62,7 +62,9 @@ describe('generator:app', function () {
           database: 'mongoose',
           authLocal: true
         })
-        .on('end', done);
+        .on('end', function() {
+	  done();
+	});
     });
 
     defaultFiles(it);

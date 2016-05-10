@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [0.8.0] - 2016-05-10
+### Added
+- NodeJs v6.0 support
+
+### Updated
+- Dependencies
+- Tests
+
+### Removed
+- iojs support
+- support for NodeJs versions < 4.4.3
+
 ## [0.7.0] - 2015-12-13
 ### Added
 - Hot loading support

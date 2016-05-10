@@ -1,7 +1,7 @@
 {
   "name": "generator-es6-graphql",
   "repository": "stylesuxx/generator-es6-graphql",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "description": "This generator enables you to quickly create an ES6 (ES2105) GraphQL enabled server with a lot of optional additions.",
   "files": [
@@ -25,11 +25,13 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "crypto": "0.0.3",
-    "yeoman-generator": "^0.21.1"
+    "yeoman-assert": "^2.2.1",
+    "yeoman-generator": "^0.23.3",
+    "yeoman-test": "^1.4.0"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.6",
-    "eslint": "^1.10.3",
+    "babel-eslint": "^6.0.4",
+    "eslint": "^2.9.0",
     "mocha": "^2.3.3",
     "mockery": "^1.4.0"
   }

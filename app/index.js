@@ -17,11 +17,11 @@ module.exports = generator.Base.extend({
         name: 'name',
         message: 'Your project name',
         default: this.appname
-      }, function(answers) {
+      }).then((answers) => {
         this.appname = answers.name;
 
         done();
-      }.bind(this));
+      });
     },
 
     graphqlroute: function() {
@@ -31,14 +31,14 @@ module.exports = generator.Base.extend({
         name: 'graphqlroute',
         message: 'Route to the GraphQL endpoint',
         default: '/graphql'
-      }, function(answers) {
+      }).then((answers) => {
         this.graphqlroute = answers.graphqlroute;
         if(this.graphqlroute[0] != '/') {
           this.graphqlroute = '/' + this.graphqlroute;
         }
 
         done();
-      }.bind(this));
+      });
     },
 
     graphiql: function() {
@@ -48,11 +48,11 @@ module.exports = generator.Base.extend({
         name: 'graphiql',
         message: 'Enable GraphiQL',
         default: true
-      }, function(answers) {
+      }).then((answers) => {
         this.graphiql = answers.graphiql;
 
         done();
-      }.bind(this));
+      });
     },
 
     database: function() {
@@ -66,7 +66,7 @@ module.exports = generator.Base.extend({
           {name: 'None', value: 'none'}
         ],
         default: 0
-      }, function(answers) {
+      }).then((answers) => {
         this.database = answers.database;
 
         if(this.database != 'none') {
@@ -75,16 +75,16 @@ module.exports = generator.Base.extend({
             name: 'name',
             message: 'Database name',
             default: this.appname
-          }, function(answers) {
+          }).then((answers) => {
             this.databaseName = answers.name;
 
             done();
-          }.bind(this));
+          });
         }
         else {
           done();
         }
-      }.bind(this));
+      });
     },
 
     passport: function() {
@@ -94,12 +94,12 @@ module.exports = generator.Base.extend({
         name: 'authentication',
         message: 'Enable passport for authentication',
         default: true
-      }, function(answers) {
+      }).then((answers) => {
         this.authentication = answers.authentication;
         this.secret = crypto.randomBytes(16).toString('hex')
 
         done();
-      }.bind(this));
+      });
     },
 
     local: function() {
@@ -110,11 +110,11 @@ module.exports = generator.Base.extend({
           name: 'authLocal',
           message: 'Enable local authentication strategy',
           default: true
-        }, function(answers) {
+        }).then((answers) => {
           this.authLocal = answers.authLocal;
 
           done();
-        }.bind(this));
+        });
       }
       else {
         done();
@@ -139,10 +139,10 @@ module.exports = generator.Base.extend({
           message: 'Choose OAuth strategies',
           choices: choices,
           default: []
-        }, function(answers) {
+        }).then((answers) => {
           this.auth = answers.auth;
 
-          choices.map(function(item) {
+          choices.map((item) => {
             if(this.auth.indexOf(item.value) > -1) {
               this.authFull.push({
                 npm: item.value,
@@ -150,10 +150,10 @@ module.exports = generator.Base.extend({
                 slug: item.slug
               });
             }
-          }.bind(this));
+          });
 
           done();
-        }.bind(this));
+        });
       }
       else {
         done();
@@ -254,7 +254,7 @@ module.exports = generator.Base.extend({
       'eslint',
       'gaze',
       'json-loader',
-      'lodash',
+      'lodash.merge',
       'mkdirp',
       'ncp',
       'path',
