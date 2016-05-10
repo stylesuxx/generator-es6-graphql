@@ -1,7 +1,7 @@
 {
   "name": "generator-es6-graphql",
   "repository": "stylesuxx/generator-es6-graphql",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "author": "Chris Landa <stylesuxx@gmail.com>",
   "description": "This generator enables you to quickly create an ES6 (ES2105) GraphQL enabled server with a lot of optional additions.",
   "files": [

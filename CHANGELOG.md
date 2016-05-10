@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.8.0] - 2016-05-10
 ### Added
 - NodeJs v6.0 support
 
